@@ -1,0 +1,39 @@
+# IntelliJ IDEA files
+.idea/
+*.iml
+
+# Maven folders
+target/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+*.env
+
+# Secret config files
+application.properties
+application.yml
+application-dev.properties
+application-test.properties
+
+# Optional: Ignore database files if any
+*.h2.db
+*.mv.db
+
+# Lombok generated files (optional)
+lombok.config
+
+# Other backup or temp files
+*.bak
+*.tmp
+~$*
+
+# VSCode files (por si alguien del equipo usa VSCode también)
+.vscode/
+
