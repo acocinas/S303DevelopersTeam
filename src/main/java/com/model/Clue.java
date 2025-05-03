@@ -1,5 +1,10 @@
 package com.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class Clue {
     private int idClue;
     private String descriptionClue;
@@ -15,24 +20,8 @@ public class Clue {
         this.revealedClue = false;
     }
 
-    public int getIdClue() {
-        return idClue;
-    }
-
-    public String getDescriptionClue() {
-        return descriptionClue;
-    }
-
-    public String getThemeClue() {
-        return themeClue;
-    }
-
-    public boolean isRevealedClue() {
-        return revealedClue;
-    }
-
-    public double getPriceClue() {
-        return priceClue;
+    public Clue() {
+        this.revealedClue = false;
     }
 
     public void revealClue() {
@@ -45,8 +34,8 @@ public class Clue {
                 "idClue=" + idClue +
                 ", descriptionClue='" + descriptionClue + '\'' +
                 ", themeClue='" + themeClue + '\'' +
-                ", revealedClue=" + revealedClue +
                 ", priceClue=" + priceClue +
+                ", revealedClue=" + revealedClue +
                 '}';
     }
 }
