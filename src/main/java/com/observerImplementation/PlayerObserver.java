@@ -1,6 +1,8 @@
-package com.interfaces;
+package com.observerImplementation;
 
-public class PlayerObserver implements Observer{
+import com.interfaces.Observer;
+
+public class PlayerObserver implements Observer {
 	@Override
 	public void getNotification(String escapeRoomState){
 		System.out.println("Room state is now " + escapeRoomState);
