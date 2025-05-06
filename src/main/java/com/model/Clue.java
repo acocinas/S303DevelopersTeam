@@ -7,15 +7,15 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class Clue {
-    private int idClue;
-    private String descriptionClue;
-    private String themeClue;
-    private double priceClue;
+    private int id;
+    private String description;
+    private String theme;
+    private double price;
 
     @Builder.Default
-    private boolean revealedClue = false;
+    private boolean revealed = false;
 
-    public void revealClue() {
-        this.revealedClue = true;
+    public void reveal() {
+        this.revealed = true;
     }
 }
