@@ -8,12 +8,12 @@ import java.util.*;
 @NoArgsConstructor
 @Builder
 public class Puzzle {
-    private int idPuzzle;
-    private String descriptionPuzzle;
-    private String solutionPuzzle;
+    private int id;
+    private String description;
+    private String solution;
 
     @Builder.Default
-    private boolean solvedPuzzle = false;
+    private boolean solved = false;
 
     @Builder.Default
     private List<Clue> clues = new ArrayList<>();
@@ -22,12 +22,11 @@ public class Puzzle {
         clues.add(clue);
     }
 
-    public boolean attemptSolutionPuzzle(String attempt) {
-        if (solutionPuzzle.equalsIgnoreCase(attempt)) {
-            this.solvedPuzzle = true;
+    public boolean attemptSolution(String attempt) {
+        if (solution.equalsIgnoreCase(attempt)) {
+            this.solved = true;
             return true;
         }
         return false;
     }
-
 }
