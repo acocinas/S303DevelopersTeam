@@ -1,11 +1,11 @@
 package com.interfaces;
 
-import com.dao.ClueDAO;
-import com.dao.CertificateDAO;
-import com.dao.DecorationItemDAO;
-import com.dao.PlayerDAO;
-import com.dao.RoomDAO;
-import com.dao.TicketSaleDAO;
+import com.interfaces.ClueDAO;
+import com.interfaces.CertificateDAO;
+import com.interfaces.DecorationItemDAO;
+import com.interfaces.PlayerDAO;
+import com.interfaces.RoomDAO;
+import com.interfaces.TicketSaleDAO;
 
 public interface DAOFactory {
     RoomDAO getRoomDAO();
