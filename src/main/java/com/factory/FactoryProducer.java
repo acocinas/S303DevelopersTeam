@@ -1,7 +1,7 @@
 package com.factory;
 
 import com.enums.Difficulty;
-
+import com.interfaces.AbstractFactory;
 
 public class FactoryProducer {
     
