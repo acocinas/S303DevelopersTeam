@@ -1,10 +1,10 @@
 package com.interfaces;
 
-import com.model.Room;
+import com.enums.Difficulty;
+import com.enums.Material;
 import com.model.Clue;
 import com.model.DecorationItem;
-import com.model.enums.Difficulty;
-import com.model.enums.Material;
+import com.model.Room;
 
 
 
