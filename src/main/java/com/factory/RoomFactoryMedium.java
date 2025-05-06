@@ -1,14 +1,9 @@
 package com.factory;
 
-import java.util.ArrayList;
-import java.util.UUID;
-
-import com.enums.Difficulty;
-import com.enums.Material;
+import java.util.*;
+import com.enums.*;
+import com.model.*;
 import com.interfaces.AbstractFactory;
-import com.model.Clue;
-import com.model.DecorationItem;
-import com.model.Room;
 
 public class RoomFactoryMedium implements AbstractFactory {
 
