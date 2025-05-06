@@ -1,42 +1,22 @@
 package com.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import lombok.*;
+import java.util.*;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Puzzle {
     private int idPuzzle;
     private String descriptionPuzzle;
     private String solutionPuzzle;
-    private boolean solvedPuzzle;
-    private List<Clue> clues;
 
-    public Puzzle(int idPuzzle, String descriptionPuzzle, String solutionPuzzle) {
-        this.idPuzzle = idPuzzle;
-        this.descriptionPuzzle = descriptionPuzzle;
-        this.solutionPuzzle = solutionPuzzle;
-        this.solvedPuzzle = false;
-        this.clues = new ArrayList<>();
-    }
+    @Builder.Default
+    private boolean solvedPuzzle = false;
 
-    public int getIdPuzzle() {
-        return idPuzzle;
-    }
-
-    public String getDescriptionPuzzle() {
-        return descriptionPuzzle;
-    }
-
-    public String getSolutionPuzzle() {
-        return solutionPuzzle;
-    }
-
-    public boolean isSolvedPuzzle() {
-        return solvedPuzzle;
-    }
-
-    public List<Clue> getClues() {
-        return clues;
-    }
+    @Builder.Default
+    private List<Clue> clues = new ArrayList<>();
 
     public void addClue(Clue clue) {
         clues.add(clue);
@@ -50,14 +30,4 @@ public class Puzzle {
         return false;
     }
 
-    @Override
-    public String toString() {
-        return "Puzzle{" +
-                "idPuzzle=" + idPuzzle +
-                ", descriptionPuzzle='" + descriptionPuzzle + '\'' +
-                ", solutionPuzzle='" + solutionPuzzle + '\'' +
-                ", solvedPuzzle=" + solvedPuzzle +
-                ", clues=" + clues.size() +
-                '}';
-    }
 }
