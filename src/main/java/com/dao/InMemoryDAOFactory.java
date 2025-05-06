@@ -5,7 +5,7 @@ import com.interfaces.CertificateDAO;
 import com.interfaces.DecorationItemDAO;
 import com.interfaces.PlayerDAO;
 import com.interfaces.RoomDAO;
-import com.dao.TicketSaleDAO;
+import com.interfaces.TicketSaleDAO;
 import com.dao.ClueDAOImpl;
 import com.dao.CertificateDAOImpl;
 import com.dao.DecorationItemDAOImpl;
