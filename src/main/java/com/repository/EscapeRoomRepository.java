@@ -2,6 +2,8 @@ package com.repository;
 
 import java.util.Date;
 import java.util.List;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 import com.interfaces.CertificateDAO;
 import com.interfaces.PlayerDAO;
@@ -41,7 +43,7 @@ public class EscapeRoomRepository {
         TicketSale ticketSale = TicketSale.builder()
                 .player(player)
                 .room(room)
-                .date(date)
+                .saleDate(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
                 .price(room.getPrice())
                 .build();
         
@@ -58,8 +60,8 @@ public class EscapeRoomRepository {
         
         Certificate certificate = Certificate.builder()
                 .player(player)
-                .room(room)
-                .completionDate(completionDate)
+                .roomName(room.getName())
+                .certificateDate(completionDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
                 .build();
         
         return certificateDAO.create(certificate);
