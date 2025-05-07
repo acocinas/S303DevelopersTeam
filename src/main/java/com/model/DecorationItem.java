@@ -1,5 +1,6 @@
 package com.model;
 
+import com.enums.*;
 import lombok.*;
 
 @Builder
@@ -9,7 +10,7 @@ import lombok.*;
 public class DecorationItem {
     private int id;
     private String name;
-    private String material;
+    private Material material;
     private double price;
 
     @Builder.Default
