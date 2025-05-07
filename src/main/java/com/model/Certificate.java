@@ -1,9 +1,14 @@
 package com.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 
+@Setter
+@Getter
 public class Certificate{
-	private int id;
+    private int id;
 	private Player player;
 	private LocalDateTime certificateDate;
 	private String roomName;
@@ -15,27 +20,7 @@ public class Certificate{
 		this.certificateDate = certificateDate;
 	}
 
-	public int getId() {
-		return id;
-	}
-	
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public Player getPlayer() {
-		return player;
-	}
-
-	public LocalDateTime getCertificateDate() {
-		return certificateDate;
-	}
-
-	public String getRoomName(){
-		return roomName;
-	}
-
-	public void getCongratulationMessage(){
+    public void getCongratulationMessage(){
 		System.out.println("Congratulation! You have beaten the room " + roomName + "!");
 	}
 
