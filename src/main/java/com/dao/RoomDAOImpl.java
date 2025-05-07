@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class RoomDAOImpl extends BaseDAO<Room, Integer> implements RoomDAO {
-    
+
     @Override
     public Room create(Room entity) throws DAOException {
         Integer id = idSequence.getAndIncrement();
@@ -88,19 +88,6 @@ public class RoomDAOImpl extends BaseDAO<Room, Integer> implements RoomDAO {
 
     @Override
     protected void setEntityId(Room entity, Integer id) {
-        if (id != null) {
-            Room newRoom = new Room(
-                id, 
-                entity.getName(),
-                entity.getDifficulty(),
-                entity.getPrice()
-            );
-            
-            entity.getPuzzles().forEach(newRoom::addPuzzle);
-            entity.getClues().forEach(newRoom::addClue);
-            entity.getDecorationItems().forEach(newRoom::addDecorationItem);
-            
-            entities.put(id, newRoom);
-        }
+        entity.setId(id);
     }
 }
