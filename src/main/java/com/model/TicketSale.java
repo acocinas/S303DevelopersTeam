@@ -1,7 +1,10 @@
 package com.model;
 
+import lombok.Getter;
+
 import java.time.LocalDateTime;
 
+@Getter
 public class TicketSale {
 	private int id;
 	private Player player;
@@ -21,27 +24,7 @@ public class TicketSale {
 		this.saleDate = saleDate;
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public Player getPlayer() {
-		return player;
-	}
-
-	public Room getRoom() {
-		return room;
-	}
-
-	public double getPrice() {
-		return price;
-	}
-
-	public LocalDateTime getSaleDate() {
-		return saleDate;
-	}
-
-	@Override
+    @Override
 	public String toString() {
 		return "TicketSale{" +
 				"id=" + id +
