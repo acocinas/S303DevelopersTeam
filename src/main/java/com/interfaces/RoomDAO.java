@@ -5,7 +5,7 @@ import com.dao.exception.DAOException;
 import com.enums.Difficulty;
 import com.model.Room;
 
-public interface RoomDAO {
+public interface RoomDAO extends GenericDAO<Room, Integer> {
     List<Room> findByDifficulty(Difficulty difficulty) throws DAOException;
     List<Room> findByTheme(String theme) throws DAOException;
     List<Room> findRoomsWithPriceRange(double minPrice, double maxPrice) throws DAOException;
