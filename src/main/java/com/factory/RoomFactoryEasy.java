@@ -7,10 +7,6 @@ import com.interfaces.AbstractFactory;
 
 public class RoomFactoryEasy implements AbstractFactory {
 
-    public RoomFactoryEasy() {
-
-    }
-
     @Override
     public Room createRoom(String theme) {
         validateTheme(theme);
@@ -34,11 +30,11 @@ public class RoomFactoryEasy implements AbstractFactory {
 
         Clue clue = new Clue();
         clue.setId(generateUniqueId());
-        clue.setName("Easy Clue");
         clue.setDescription(description);
         clue.setTheme(theme);
+        clue.setPrice(5.0);
 
-        clue.setVisibility(true);
+        clue.reveal();
 
         return clue;
     }
@@ -53,7 +49,7 @@ public class RoomFactoryEasy implements AbstractFactory {
         item.setName(name);
         item.setMaterial(material);
 
-        item.setIsInteractive(false);
+        item.setInteractive(false);
 
         return item;
     }
@@ -64,8 +60,13 @@ public class RoomFactoryEasy implements AbstractFactory {
     }
 
     protected int generateUniqueId() {
-        return Math.abs(UUID.randomUUID().hashCode());
+        int rawId = UUID.randomUUID().hashCode();
+        if (rawId == Integer.MIN_VALUE) {
+            rawId = 0;
+        }
+        return Math.abs(rawId);
     }
+
 
     protected void validateTheme(String theme) {
         if (theme == null || theme.trim().isEmpty()) {

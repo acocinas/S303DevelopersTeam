@@ -1,15 +1,16 @@
 package com.factory;
 
-import java.util.*;
-import com.enums.*;
-import com.model.*;
+import java.util.ArrayList;
+import java.util.UUID;
+
+import com.enums.Difficulty;
+import com.enums.Material;
 import com.interfaces.AbstractFactory;
+import com.model.Clue;
+import com.model.DecorationItem;
+import com.model.Room;
 
 public class RoomFactoryMedium implements AbstractFactory {
-
-    public RoomFactoryMedium() {
-
-    }
 
     @Override
     public Room createRoom(String theme) {
@@ -35,11 +36,11 @@ public class RoomFactoryMedium implements AbstractFactory {
 
         Clue clue = new Clue();
         clue.setId(generateUniqueId());
-        clue.setName("Medium Clue");
         clue.setDescription(description);
         clue.setTheme(theme);
+        clue.setPrice(10.0);
 
-        clue.setVisibility(Math.random() > 0.5);
+        clue.reveal();
 
         return clue;
     }
@@ -54,7 +55,7 @@ public class RoomFactoryMedium implements AbstractFactory {
         item.setName(name);
         item.setMaterial(material);
 
-        item.setIsInteractive(Math.random() > 0.3);
+        item.setInteractive(false);
 
         return item;
     }
@@ -65,7 +66,11 @@ public class RoomFactoryMedium implements AbstractFactory {
     }
 
     protected int generateUniqueId() {
-        return Math.abs(UUID.randomUUID().hashCode());
+        int rawId = UUID.randomUUID().hashCode();
+        if (rawId == Integer.MIN_VALUE) {
+            rawId = 0;
+        }
+        return Math.abs(rawId);
     }
 
     protected void validateTheme(String theme) {
