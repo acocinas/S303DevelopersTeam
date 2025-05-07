@@ -40,13 +40,18 @@ public class InventoryRepository {
     public Map<Difficulty, Long> getRoomCountByDifficulty() throws DAOException {
         log.debug("Getting room count by difficulty");
         return roomDAO.findAll().stream()
-                .collect(Collectors.groupingBy(Room::getDifficulty, Collectors.counting()));
+    .collect(Collectors.groupingBy(
+        room -> Difficulty.valueOf(room.getDifficulty()),
+        Collectors.counting()));
     }
     
     public Map<Material, Long> getDecorationCountByMaterial() throws DAOException {
         log.debug("Getting decoration count by material");
         return decorationItemDAO.findAll().stream()
-                .collect(Collectors.groupingBy(DecorationItem::getMaterial, Collectors.counting()));
+    .collect(Collectors.groupingBy(
+        item -> Material.valueOf(item.getMaterial()),
+        Collectors.counting()
+    ));
     }
     
     public Map<String, Long> getClueCountByTheme() throws DAOException {
