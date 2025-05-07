@@ -1,33 +1,37 @@
-package com.observerImplementation;
+package com.utils;
 
 import com.interfaces.Observable;
 import com.interfaces.Observer;
-import com.model.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoomObservable implements Observable {
+public class EventManager implements Observable {
     private List<Observer> observers;
 
-    public RoomObservable(List<Player> observers) {
+    public EventManager(List<Observer> observers) {
+
         this.observers = new ArrayList<>();
     }
-
     @Override
     public void addObserver(Observer observer) {
+
         observers.add(observer);
     }
-
     @Override
     public void removeObserver(Observer observer) {
+
         observers.remove(observer);
+    }
+    @Override
+    public void notifyObservers() {
+        notifyObservers("⚠️ A change occurred.");
     }
 
     @Override
-    public void notifyObservers() {
+    public void notifyObservers(String message) {
         for (Observer observer : observers) {
-            observer.getNotification("Room state has changed!");
+            observer.getNotification(message);
         }
     }
 }
