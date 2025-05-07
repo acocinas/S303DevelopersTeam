@@ -18,6 +18,10 @@ public class Certificate{
 	public int getId() {
 		return id;
 	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public Player getPlayer() {
 		return player;

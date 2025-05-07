@@ -45,7 +45,7 @@ public class ClueDAOImpl extends BaseDAO<Clue, Integer> implements ClueDAO {
     public List<Clue> findByVisibility(boolean visibility) throws DAOException {
         log.debug("Finding clues by visibility: {}", visibility);
         return entities.values().stream()
-                .filter(clue -> clue.isVisibility() == visibility)
+                .filter(clue -> clue.isRevealed() == visibility)
                 .collect(Collectors.toList());
     }
 

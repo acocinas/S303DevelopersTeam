@@ -46,7 +46,7 @@ public class RoomDAOImpl extends BaseDAO<Room, Integer> implements RoomDAO {
     public List<Room> findByTheme(String theme) throws DAOException {
         log.debug("Finding rooms by theme: {}", theme);
         return entities.values().stream()
-                .filter(room -> theme.equalsIgnoreCase(room.getTheme()))
+                .filter(room -> theme.equalsIgnoreCase(room.getName()))
                 .collect(Collectors.toList());
     }
 
@@ -88,6 +88,19 @@ public class RoomDAOImpl extends BaseDAO<Room, Integer> implements RoomDAO {
 
     @Override
     protected void setEntityId(Room entity, Integer id) {
-        entity.setId(id);
+        if (id != null) {
+            Room newRoom = new Room(
+                id, 
+                entity.getName(),
+                entity.getDifficulty(),
+                entity.getPrice()
+            );
+            
+            entity.getPuzzles().forEach(newRoom::addPuzzle);
+            entity.getClues().forEach(newRoom::addClue);
+            entity.getDecorationItems().forEach(newRoom::addDecorationItem);
+            
+            entities.put(id, newRoom);
+        }
     }
 }

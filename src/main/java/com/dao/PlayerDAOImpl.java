@@ -46,7 +46,7 @@ public class PlayerDAOImpl extends BaseDAO<Player, Integer> implements PlayerDAO
     public List<Player> findTopPlayers(int limit) throws DAOException {
         log.debug("Finding top {} players", limit);
         return entities.values().stream()
-                .sorted(Comparator.comparing(Player::getScore).reversed())
+                .sorted(Comparator.comparing(Player::getRoomProgress).reversed())
                 .limit(limit)
                 .collect(Collectors.toList());
     }

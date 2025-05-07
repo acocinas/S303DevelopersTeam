@@ -38,7 +38,7 @@ public class TicketSaleDAOImpl extends BaseDAO<TicketSale, Integer> implements T
     public List<TicketSale> findByPlayerId(Integer playerId) throws DAOException {
         log.debug("Finding ticket sales by player id: {}", playerId);
         return entities.values().stream()
-                .filter(sale -> sale.getPlayer().getId().equals(playerId))
+                .filter(sale -> sale.getPlayer().getId() == playerId)
                 .collect(Collectors.toList());
     }
 
@@ -46,7 +46,7 @@ public class TicketSaleDAOImpl extends BaseDAO<TicketSale, Integer> implements T
     public List<TicketSale> findByRoomId(Integer roomId) throws DAOException {
         log.debug("Finding ticket sales by room id: {}", roomId);
         return entities.values().stream()
-                .filter(sale -> sale.getRoom().getId().equals(roomId))
+                .filter(sale -> sale.getRoom().getId() == roomId)
                 .collect(Collectors.toList());
     }
 
@@ -54,7 +54,11 @@ public class TicketSaleDAOImpl extends BaseDAO<TicketSale, Integer> implements T
     public List<TicketSale> findByDateRange(Date startDate, Date endDate) throws DAOException {
         log.debug("Finding ticket sales between {} and {}", startDate, endDate);
         return entities.values().stream()
-                .filter(sale -> !sale.getDate().before(startDate) && !sale.getDate().after(endDate))
+                .filter(sale -> {
+                    // Convert LocalDateTime to Date for comparison
+                    Date saleDate = java.sql.Timestamp.valueOf(sale.getSaleDate());
+                    return !saleDate.before(startDate) && !saleDate.after(endDate);
+                })
                 .collect(Collectors.toList());
     }
 
@@ -70,7 +74,7 @@ public class TicketSaleDAOImpl extends BaseDAO<TicketSale, Integer> implements T
     @Override
     public double calculateTotalRevenueByRoom(Integer roomId) throws DAOException {
         double total = entities.values().stream()
-                .filter(sale -> sale.getRoom().getId().equals(roomId))
+                .filter(sale -> sale.getRoom().getId() == roomId)
                 .mapToDouble(TicketSale::getPrice)
                 .sum();
         log.debug("Calculated total revenue for room {}: {}", roomId, total);
@@ -84,6 +88,21 @@ public class TicketSaleDAOImpl extends BaseDAO<TicketSale, Integer> implements T
 
     @Override
     protected void setEntityId(TicketSale entity, Integer id) {
-        entity.setId(id);
+        // TicketSale has immutable id, create a new instance with the id 
+        if (id != null) {
+            // This is a workaround since TicketSale doesn't have setId
+            // In a real implementation, you might want to enhance the model
+            // to support proper id setting
+            TicketSale newSale = new TicketSale(
+                id,
+                entity.getPlayer(),
+                entity.getRoom(),
+                entity.getPrice(),
+                entity.getSaleDate()
+            );
+            
+            // Replace in the map directly
+            entities.put(id, newSale);
+        }
     }
 }
