@@ -2,10 +2,12 @@ package com.dao;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.ArrayList;
 
 import com.interfaces.CertificateDAO;
 import com.dao.exception.DAOException;
 import com.model.Certificate;
+import com.model.Room;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -37,15 +39,18 @@ public class CertificateDAOImpl extends BaseDAO<Certificate, Integer> implements
     public List<Certificate> findByPlayerId(Integer playerId) throws DAOException {
         log.debug("Finding certificates by player id: {}", playerId);
         return entities.values().stream()
-                .filter(cert -> cert.getPlayer().getId().equals(playerId))
+                .filter(cert -> cert.getPlayer().getId() == playerId)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<Certificate> findByRoomId(Integer roomId) throws DAOException {
         log.debug("Finding certificates by room id: {}", roomId);
+        
+        final String roomIdStr = String.valueOf(roomId);
+        
         return entities.values().stream()
-                .filter(cert -> cert.getRoom().getId().equals(roomId))
+                .filter(cert -> cert.getRoomName() != null && cert.getRoomName().contains(roomIdStr))
                 .collect(Collectors.toList());
     }
 
@@ -56,6 +61,8 @@ public class CertificateDAOImpl extends BaseDAO<Certificate, Integer> implements
 
     @Override
     protected void setEntityId(Certificate entity, Integer id) {
-        entity.setId(id);
+        if (id != null) {
+            entity.setId(id.intValue());
+        }
     }
 }

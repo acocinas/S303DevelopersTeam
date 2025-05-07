@@ -60,6 +60,14 @@ public class DecorationItemDAOImpl extends BaseDAO<DecorationItem, Integer> impl
     }
 
     @Override
+    public List<DecorationItem> findDecorationItemsForRoom(Integer roomId) throws DAOException {
+        log.debug("Finding decoration items for room: {}", roomId);
+        // Implementation would depend on how decoration items are linked to rooms
+        // For now, we'll throw an exception as this needs proper implementation
+        throw new UnsupportedOperationException("Method findDecorationItemsForRoom not implemented yet");
+    }
+
+    @Override
     protected Integer getEntityId(DecorationItem entity) {
         return entity.getId();
     }
