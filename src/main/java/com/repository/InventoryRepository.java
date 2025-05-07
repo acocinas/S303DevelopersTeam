@@ -49,7 +49,7 @@ public class InventoryRepository {
         log.debug("Getting decoration count by material");
         return decorationItemDAO.findAll().stream()
     .collect(Collectors.groupingBy(
-        item -> Material.valueOf(item.getMaterial()),
+        DecorationItem::getMaterial,
         Collectors.counting()
     ));
     }
