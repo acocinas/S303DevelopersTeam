@@ -1,31 +1,29 @@
 package com.model;
 
-import com.interfaces.Observable;
 import com.interfaces.Observer;
-import lombok.Data;
-import lombok.Getter;
+import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Data
-public class Player {
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Slf4j
+public class Player implements Observer {
 	private int id;
 	private String name;
 	private String email;
-	private int roomProgress;
-	private List<Ticket> tickets;
 
-	public Player(int id, String name, String email) {
-		this.id = id;
-		this.name = name;
-		this.email = email;
-		this.roomProgress = 0;
-		this.tickets = new ArrayList<>();
-	}
+	@Builder.Default
+	private int roomProgress = 0;
 
-	public void addTicket(Ticket ticket) {
+	@Builder.Default
+	private List<TicketSale> tickets = new ArrayList<>();
+
+	public void addTicket(TicketSale ticket) {
 		tickets.add(ticket);
 	}
 
@@ -34,13 +32,7 @@ public class Player {
 	}
 
 	@Override
-	public String toString() {
-		return "Player{" +
-				"id=" + id +
-				", name='" + name + '\'' +
-				", email='" + email + '\'' +
-				", roomProgress=" + roomProgress +
-				", tickets=" + tickets +
-				'}';
+	public void getNotification(String message) {
+		log.info("📨 Notificación para {}: {}", name, message);
 	}
 }
