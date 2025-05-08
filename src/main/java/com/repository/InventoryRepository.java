@@ -74,4 +74,9 @@ public class InventoryRepository {
         log.info("Removing decoration from inventory: {}", decorationId);
         decorationItemDAO.deleteById(decorationId);
     }
+
+    public void addRoom(Room room) throws DAOException {
+        log.info("Adding room to inventory: {}", room.getName());
+        roomDAO.create(room);
+    }
 }
