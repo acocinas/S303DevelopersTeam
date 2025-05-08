@@ -41,7 +41,7 @@ public class InventoryRepository {
         log.debug("Getting room count by difficulty");
         return roomDAO.findAll().stream()
     .collect(Collectors.groupingBy(
-        room -> Difficulty.valueOf(room.getDifficulty()),
+        Room::getDifficulty,
         Collectors.counting()));
     }
     
