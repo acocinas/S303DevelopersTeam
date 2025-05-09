@@ -79,4 +79,14 @@ public class InventoryService {
         log.info("Adding room to inventory: {}", room.getName());
         roomDAO.create(room);
     }
+
+    public Room getRoomById(int id) throws DAOException {
+        return roomDAO.findById(id).orElse(null);
+    }
+
+    public void updateRoom(Room room) throws DAOException {
+        log.info("Updating room with ID: {}", room.getId());
+        roomDAO.update(room);
+    }
+
 }
