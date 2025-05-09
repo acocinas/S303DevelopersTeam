@@ -11,13 +11,13 @@ public class DAOManager {
     @Getter @Setter
     private static String factoryType = DEFAULT_FACTORY_TYPE;
     
+    
+    private DAOManager() {
+        
+    }
+    
     public static DAOFactory getDAOFactory() {
-        switch(factoryType.toLowerCase()) {
-            case "memory":
-                return InMemoryDAOFactory.getInstance();
-            // Other factory types would be added here
-            default:
-                return InMemoryDAOFactory.getInstance();
-        }
+        
+        return InMemoryDAOFactory.getInstance();
     }
 }
