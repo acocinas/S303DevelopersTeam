@@ -39,7 +39,7 @@ public class DecorationItemDAOImpl extends BaseDAO<DecorationItem, Integer> impl
         log.debug("Finding decoration items by material: {}", material);
         return entities.values().stream()
                 .filter(item -> item.getMaterial().equals(material))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -47,7 +47,7 @@ public class DecorationItemDAOImpl extends BaseDAO<DecorationItem, Integer> impl
         log.debug("Finding decoration items by interactivity: {}", isInteractive);
         return entities.values().stream()
                 .filter(item -> item.isInteractive() == isInteractive)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -62,8 +62,6 @@ public class DecorationItemDAOImpl extends BaseDAO<DecorationItem, Integer> impl
     @Override
     public List<DecorationItem> findDecorationItemsForRoom(Integer roomId) throws DAOException {
         log.debug("Finding decoration items for room: {}", roomId);
-        // Implementation would depend on how decoration items are linked to rooms
-        // For now, we'll throw an exception as this needs proper implementation
         throw new UnsupportedOperationException("Method findDecorationItemsForRoom not implemented yet");
     }
 

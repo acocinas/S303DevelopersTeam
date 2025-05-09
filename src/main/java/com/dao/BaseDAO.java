@@ -13,8 +13,8 @@ import com.dao.exception.DAOException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public abstract class BaseDAO<T, ID> implements GenericDAO<T, ID> {
-    protected final Map<ID, T> entities = new HashMap<>();
+public abstract class BaseDAO<T, I> implements GenericDAO<T, I> {
+    protected final Map<I, T> entities = new HashMap<>();
     protected AtomicInteger idSequence = new AtomicInteger(1);
     
     @Override
@@ -24,14 +24,14 @@ public abstract class BaseDAO<T, ID> implements GenericDAO<T, ID> {
     }
     
     @Override
-    public Optional<T> findById(ID id) throws DAOException {
+    public Optional<T> findById(I id) throws DAOException {
         log.debug("Finding entity with id: {}", id);
         return Optional.ofNullable(entities.get(id));
     }
     
     @Override
     public void delete(T entity) throws DAOException {
-        ID id = getEntityId(entity);
+        I id = getEntityId(entity);
         if (id != null) {
             log.debug("Deleting entity with id: {}", id);
             entities.remove(id);
@@ -39,11 +39,11 @@ public abstract class BaseDAO<T, ID> implements GenericDAO<T, ID> {
     }
     
     @Override
-    public void deleteById(ID id) throws DAOException {
+    public void deleteById(I id) throws DAOException {
         log.debug("Deleting entity with id: {}", id);
         entities.remove(id);
     }
     
-    protected abstract ID getEntityId(T entity);
-    protected abstract void setEntityId(T entity, ID id);
+    protected abstract I getEntityId(T entity);
+    protected abstract void setEntityId(T entity, I id);
 }

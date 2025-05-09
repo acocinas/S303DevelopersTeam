@@ -39,7 +39,7 @@ public class TicketSaleDAOImpl extends BaseDAO<TicketSale, Integer> implements T
         log.debug("Finding ticket sales by player id: {}", playerId);
         return entities.values().stream()
                 .filter(sale -> sale.getPlayer().getId() == playerId)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -47,7 +47,7 @@ public class TicketSaleDAOImpl extends BaseDAO<TicketSale, Integer> implements T
         log.debug("Finding ticket sales by room id: {}", roomId);
         return entities.values().stream()
                 .filter(sale -> sale.getRoom().getId() == roomId)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -55,11 +55,10 @@ public class TicketSaleDAOImpl extends BaseDAO<TicketSale, Integer> implements T
         log.debug("Finding ticket sales between {} and {}", startDate, endDate);
         return entities.values().stream()
                 .filter(sale -> {
-                    // Convert LocalDateTime to Date for comparison
                     Date saleDate = java.sql.Timestamp.valueOf(sale.getSaleDate());
                     return !saleDate.before(startDate) && !saleDate.after(endDate);
                 })
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -88,11 +87,7 @@ public class TicketSaleDAOImpl extends BaseDAO<TicketSale, Integer> implements T
 
     @Override
     protected void setEntityId(TicketSale entity, Integer id) {
-        // TicketSale has immutable id, create a new instance with the id 
         if (id != null) {
-            // This is a workaround since TicketSale doesn't have setId
-            // In a real implementation, you might want to enhance the model
-            // to support proper id setting
             TicketSale newSale = new TicketSale(
                 id,
                 entity.getPlayer(),
@@ -101,7 +96,6 @@ public class TicketSaleDAOImpl extends BaseDAO<TicketSale, Integer> implements T
                 entity.getSaleDate()
             );
             
-            // Replace in the map directly
             entities.put(id, newSale);
         }
     }

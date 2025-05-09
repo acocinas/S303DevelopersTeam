@@ -39,7 +39,7 @@ public class PlayerDAOImpl extends BaseDAO<Player, Integer> implements PlayerDAO
         log.debug("Finding players by name: {}", name);
         return entities.values().stream()
                 .filter(player -> player.getName().toLowerCase().contains(name.toLowerCase()))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -48,7 +48,7 @@ public class PlayerDAOImpl extends BaseDAO<Player, Integer> implements PlayerDAO
         return entities.values().stream()
                 .sorted(Comparator.comparing(Player::getRoomProgress).reversed())
                 .limit(limit)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
