@@ -1,16 +1,20 @@
 package com.menu;
 
 import com.service.InventoryService;
+import com.service.RoomService;
 
 import java.util.Scanner;
 
 public class RoomMenu {
-	private final InventoryService inventoryRepository;
+	private final InventoryService inventoryService;
 	private final Scanner scanner;
+	private final RoomService roomService;
 
-	public RoomMenu(InventoryService inventoryRepository, Scanner scanner) {
-		this.inventoryRepository = inventoryRepository;
+
+	public RoomMenu(InventoryService inventoryService, Scanner scanner) {
+		this.inventoryService = inventoryService;
 		this.scanner = scanner;
+		this.roomService = new RoomService(inventoryService, scanner);
 	}
 
 	private void manageRooms() {
@@ -32,10 +36,10 @@ public class RoomMenu {
 
 			switch (option) {
 				case 1:
-					createRoom();
+					roomService.createRoom();
 					break;
 				case 2:
-					removeRoom();
+					roomService.removeRoomById();
 					break;
 				case 0:
 					System.out.println("Returning to main menu...");
