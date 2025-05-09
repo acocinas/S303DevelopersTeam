@@ -1,22 +1,22 @@
 package com.controller;
 
-import com.repository.EscapeRoomRepository;
-import com.repository.InventoryRepository;
-import com.utils.EventManager;
+import com.service.EscapeRoomService;
+import com.service.InventoryService;
+import com.observer.EventManager;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class EscapeRoomVirtual {
 	private String name;
-	private final EscapeRoomRepository escapeRoomRepository;
-	private final InventoryRepository inventoryRepository;
+	private final EscapeRoomService escapeRoomRepository;
+	private final InventoryService inventoryRepository;
 	private final EventManager eventManager;
 	private final Scanner scanner;
 
 	public EscapeRoomVirtual() {
-		this.escapeRoomRepository = new EscapeRoomRepository();
-		this.inventoryRepository = new InventoryRepository();
+		this.escapeRoomRepository = new EscapeRoomService();
+		this.inventoryRepository = new InventoryService();
 		this.eventManager = new EventManager(new ArrayList<>());
 		this.scanner = new Scanner(System.in);
 	}
