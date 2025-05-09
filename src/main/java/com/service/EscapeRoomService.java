@@ -1,8 +1,7 @@
-package com.repository;
+package com.service;
 
 import java.util.Date;
 import java.util.List;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 import com.interfaces.CertificateDAO;
@@ -19,13 +18,13 @@ import com.model.TicketSale;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class EscapeRoomRepository {
+public class EscapeRoomService {
     private final RoomDAO roomDAO;
     private final PlayerDAO playerDAO;
     private final TicketSaleDAO ticketSaleDAO;
     private final CertificateDAO certificateDAO;
     
-    public EscapeRoomRepository() {
+    public EscapeRoomService() {
         roomDAO = DAOManager.getDAOFactory().getRoomDAO();
         playerDAO = DAOManager.getDAOFactory().getPlayerDAO();
         ticketSaleDAO = DAOManager.getDAOFactory().getTicketSaleDAO();

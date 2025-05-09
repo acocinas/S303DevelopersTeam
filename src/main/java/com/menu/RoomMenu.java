@@ -1,14 +1,14 @@
-package com.menuFunctions;
+package com.menu;
 
-import com.repository.InventoryRepository;
+import com.service.InventoryService;
 
 import java.util.Scanner;
 
-public class RoomManager {
-	private final InventoryRepository inventoryRepository;
+public class RoomMenu {
+	private final InventoryService inventoryRepository;
 	private final Scanner scanner;
 
-	public RoomManager(InventoryRepository inventoryRepository, Scanner scanner) {
+	public RoomMenu(InventoryService inventoryRepository, Scanner scanner) {
 		this.inventoryRepository = inventoryRepository;
 		this.scanner = scanner;
 	}
