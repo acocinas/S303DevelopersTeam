@@ -2,7 +2,7 @@ package com.model;
 
 import com.enums.Difficulty;
 import com.interfaces.Observer;
-import com.utils.EventManager;
+import com.observer.EventManager;
 import lombok.*;
 
 import java.util.ArrayList;
