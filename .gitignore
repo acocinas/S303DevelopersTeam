@@ -37,3 +37,7 @@ lombok.config
 # VSCode files (por si alguien del equipo usa VSCode también)
 .vscode/
 
+.classpath
+.factorypath
+.project
+.settings/
