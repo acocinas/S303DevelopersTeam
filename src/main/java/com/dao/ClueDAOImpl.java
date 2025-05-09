@@ -1,7 +1,7 @@
 package com.dao;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 import com.interfaces.ClueDAO;
 import com.dao.exception.DAOException;
@@ -38,7 +38,7 @@ public class ClueDAOImpl extends BaseDAO<Clue, Integer> implements ClueDAO {
         log.debug("Finding clues by theme: {}", theme);
         return entities.values().stream()
                 .filter(clue -> theme.equalsIgnoreCase(clue.getTheme()))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -46,13 +46,12 @@ public class ClueDAOImpl extends BaseDAO<Clue, Integer> implements ClueDAO {
         log.debug("Finding clues by visibility: {}", visibility);
         return entities.values().stream()
                 .filter(clue -> clue.isRevealed() == visibility)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
     public List<Clue> findCluesForRoom(Integer roomId) throws DAOException {
         log.debug("Finding clues for room: {}", roomId);
-        // Implementation depends on how clues are linked to rooms
         throw new UnsupportedOperationException("Not implemented yet");
     }
 

@@ -1,13 +1,10 @@
 package com.dao;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.ArrayList;
 
 import com.interfaces.CertificateDAO;
 import com.dao.exception.DAOException;
 import com.model.Certificate;
-import com.model.Room;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -40,7 +37,7 @@ public class CertificateDAOImpl extends BaseDAO<Certificate, Integer> implements
         log.debug("Finding certificates by player id: {}", playerId);
         return entities.values().stream()
                 .filter(cert -> cert.getPlayer().getId() == playerId)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -51,7 +48,7 @@ public class CertificateDAOImpl extends BaseDAO<Certificate, Integer> implements
         
         return entities.values().stream()
                 .filter(cert -> cert.getRoomName() != null && cert.getRoomName().contains(roomIdStr))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
