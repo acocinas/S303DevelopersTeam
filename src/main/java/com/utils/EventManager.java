@@ -11,7 +11,7 @@ public class EventManager implements Observable {
 
     public EventManager(List<Observer> observers) {
 
-        this.observers = new ArrayList<>();
+        this.observers = observers != null ? observers : new ArrayList<>();
     }
     @Override
     public void addObserver(Observer observer) {
