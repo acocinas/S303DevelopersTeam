@@ -1,41 +1,18 @@
 package com.model;
 
+import com.enums.*;
+import lombok.*;
+
+@Builder
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class DecorationItem {
-    private int idDecorationItem;
-    private String nameDecorationItem;
-    private String materialDecorationItem;
-    private double priceDecorationItem;
+    private int id;
+    private String name;
+    private Material material;
+    private double price;
 
-    public DecorationItem(int idDecorationItem, String nameDecorationItem, String materialDecorationItem, double priceDecorationItem) {
-        this.idDecorationItem = idDecorationItem;
-        this.nameDecorationItem = nameDecorationItem;
-        this.materialDecorationItem = materialDecorationItem;
-        this.priceDecorationItem = priceDecorationItem;
-    }
-
-    public int getIdDecorationItem() {
-        return idDecorationItem;
-    }
-
-    public String getNameDecorationItem() {
-        return nameDecorationItem;
-    }
-
-    public String getMaterialDecorationItem() {
-        return materialDecorationItem;
-    }
-
-    public double getPriceDecorationItem() {
-        return priceDecorationItem;
-    }
-
-    @Override
-    public String toString() {
-        return "DecorationItem{" +
-                "idDecorationItem=" + idDecorationItem +
-                ", nameDecorationItem='" + nameDecorationItem + '\'' +
-                ", materialDecorationItem='" + materialDecorationItem + '\'' +
-                ", priceDecorationItem=" + priceDecorationItem +
-                '}';
-    }
+    @Builder.Default
+    private boolean interactive = false;
 }

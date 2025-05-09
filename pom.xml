@@ -22,6 +22,12 @@
             <scope>test</scope>
         </dependency>
 
+<dependency>
+   <groupId>com.zaxxer</groupId>
+   <artifactId>HikariCP</artifactId>
+   <version>6.3.0</version>
+</dependency>
+      
         <!-- MySQL Connector para base de datos -->
         <dependency>
             <groupId>com.mysql</groupId>
@@ -29,6 +35,20 @@
             <version>8.3.0</version>
         </dependency>
 
+<!-- Logging framework - SLF4J API -->
+    <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>2.0.7</version>
+    </dependency>
+
+     <!-- SLF4J Implementation - choose one -->
+    <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-simple</artifactId>
+        <version>2.0.7</version>
+    </dependency>
+    
         <!-- Lombok para reducir código boilerplate -->
         <dependency>
             <groupId>org.projectlombok</groupId>
