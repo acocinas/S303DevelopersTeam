@@ -108,5 +108,4 @@ public class RoomService {
 			System.out.println("❌ Error while adding clue: " + e.getMessage());
 		}
 	}
-
 }
