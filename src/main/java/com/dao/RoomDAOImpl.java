@@ -39,7 +39,7 @@ public class RoomDAOImpl extends BaseDAO<Room, Integer> implements RoomDAO {
         log.debug("Finding rooms by difficulty: {}", difficulty);
         return entities.values().stream()
                 .filter(room -> room.getDifficulty().equals(difficulty))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -47,7 +47,7 @@ public class RoomDAOImpl extends BaseDAO<Room, Integer> implements RoomDAO {
         log.debug("Finding rooms by theme: {}", theme);
         return entities.values().stream()
                 .filter(room -> theme.equalsIgnoreCase(room.getName()))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -55,7 +55,7 @@ public class RoomDAOImpl extends BaseDAO<Room, Integer> implements RoomDAO {
         log.debug("Finding rooms with price range: {} - {}", minPrice, maxPrice);
         return entities.values().stream()
                 .filter(room -> room.getPrice() >= minPrice && room.getPrice() <= maxPrice)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -70,14 +70,12 @@ public class RoomDAOImpl extends BaseDAO<Room, Integer> implements RoomDAO {
     @Override
     public void addClueToRoom(Integer roomId, Integer clueId) throws DAOException {
         log.info("Adding clue {} to room {}", clueId, roomId);
-        // Implementation would depend on how Rooms and Clues are linked
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override
     public void addDecorationToRoom(Integer roomId, Integer decorationId) throws DAOException {
         log.info("Adding decoration {} to room {}", decorationId, roomId);
-        // Implementation would depend on how Rooms and Decorations are linked
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
