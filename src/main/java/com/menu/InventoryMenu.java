@@ -38,16 +38,16 @@ public class InventoryMenu {
 					inventoryContentService.showInventorySummary();
 					break;
 				case 2:
-					// inventoryContentService.showInventoryValue();
+					inventoryContentService.showInventoryValue();
 					break;
 				case 3:
-					// inventoryContentService.removeRoom();
+					inventoryContentService.removeRoom();
 					break;
 				case 4:
-					// inventoryContentService.removeClue();
+					inventoryContentService.removeClue();
 					break;
 				case 5:
-					// inventoryContentService.removeDecoration();
+					inventoryContentService.removeDecoration();
 					break;
 				case 0:
 					System.out.println("Returning to main menu...");
