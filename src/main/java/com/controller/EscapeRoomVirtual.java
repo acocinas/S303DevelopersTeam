@@ -1,24 +1,31 @@
 package com.controller;
 
+import com.menu.InventoryMenu;
+import com.menu.RoomMenu;
+import com.observer.EventManager;
 import com.service.EscapeRoomService;
 import com.service.InventoryService;
-import com.observer.EventManager;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class EscapeRoomVirtual {
-	private String name;
 	private final EscapeRoomService escapeRoomRepository;
 	private final InventoryService inventoryRepository;
 	private final EventManager eventManager;
 	private final Scanner scanner;
+	private final RoomMenu roomMenu;
+	private final InventoryMenu inventoryMenu;
+	private String name;
 
 	public EscapeRoomVirtual() {
 		this.escapeRoomRepository = new EscapeRoomService();
 		this.inventoryRepository = new InventoryService();
 		this.eventManager = new EventManager(new ArrayList<>());
 		this.scanner = new Scanner(System.in);
+
+		this.roomMenu = new RoomMenu(inventoryRepository, scanner);
+		this.inventoryMenu = new InventoryMenu(new com.service.InventoryContentService(inventoryRepository, scanner), scanner);
 	}
 
 	public void start() {
@@ -46,10 +53,12 @@ public class EscapeRoomVirtual {
 				case 1:
 					createEscapeRoom();
 					break;
-				// case 2: manageRooms();
-				// break;
-				// case 3: manageInventory();
-				// break;
+				case 2:
+					roomMenu.manageRoom();
+					break;
+				case 3:
+					inventoryMenu.manageInventory();
+					break;
 				// case 4: managePlayers();
 				// break;
 				// case 5: viewRevenue();

@@ -20,7 +20,7 @@ public class RoomMenu {
 		this.roomContentService = new RoomContentService(inventoryService, scanner);
 	}
 
-	private void manageRooms() {
+	public void manageRoom() {
 		int option;
 		do {
 			System.out.println("\n--- ROOM MANAGEMENT ---");
