@@ -67,15 +67,54 @@ public class InventoryContentService {
 	}
 
 	public void removeRoom() {
+		try {
+			System.out.print("Enter the ID of the room to remove: ");
+			while (!scanner.hasNextInt()) {
+				System.out.print("Please enter a valid numeric ID: ");
+				scanner.next();
+			}
+			int roomId = scanner.nextInt();
+			scanner.nextLine();
 
+			inventoryService.removeRoomFromInventory(roomId);
+			System.out.println("✅ Room with ID " + roomId + " was successfully removed.");
+		} catch (DAOException e) {
+			System.out.println("❌ Could not remove room: " + e.getMessage());
+		}
 	}
 
 	public void removeClue() {
+		try {
+			System.out.print("Enter the ID of the clue to remove: ");
+			while (!scanner.hasNextInt()) {
+				System.out.print("Please enter a valid numeric ID: ");
+				scanner.next();
+			}
+			int clueId = scanner.nextInt();
+			scanner.nextLine();
 
+			inventoryService.removeClueFromInventory(clueId);
+			System.out.println("✅ Clue with ID " + clueId + " was successfully removed.");
+		} catch (DAOException e) {
+			System.out.println("❌ Could not remove clue: " + e.getMessage());
+		}
 	}
 
 	public void removeDecoration() {
+		try {
+			System.out.print("Enter the ID of the decoration item to remove: ");
+			while (!scanner.hasNextInt()) {
+				System.out.print("Please enter a valid numeric ID: ");
+				scanner.next();
+			}
+			int decorationId = scanner.nextInt();
+			scanner.nextLine();
 
+			inventoryService.removeDecorationFromInventory(decorationId);
+			System.out.println("✅ Decoration item with ID " + decorationId + " was successfully removed.");
+		} catch (DAOException e) {
+			System.out.println("❌ Could not remove decoration item: " + e.getMessage());
+		}
 	}
 }
 
