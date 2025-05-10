@@ -1,4 +1,4 @@
-package com.repository;
+package com.service;
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -17,12 +17,12 @@ import com.model.Room;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class InventoryRepository {
+public class InventoryService {
     private final RoomDAO roomDAO;
     private final ClueDAO clueDAO;
     private final DecorationItemDAO decorationItemDAO;
     
-    public InventoryRepository() {
+    public InventoryService() {
         roomDAO = DAOManager.getDAOFactory().getRoomDAO();
         clueDAO = DAOManager.getDAOFactory().getClueDAO();
         decorationItemDAO = DAOManager.getDAOFactory().getDecorationItemDAO();
@@ -79,4 +79,14 @@ public class InventoryRepository {
         log.info("Adding room to inventory: {}", room.getName());
         roomDAO.create(room);
     }
+
+    public Room getRoomById(int id) throws DAOException {
+        return roomDAO.findById(id).orElse(null);
+    }
+
+    public void updateRoom(Room room) throws DAOException {
+        log.info("Updating room with ID: {}", room.getId());
+        roomDAO.update(room);
+    }
+
 }

@@ -1,4 +1,4 @@
-package com.utils;
+package com.observer;
 
 import com.interfaces.Observable;
 import com.interfaces.Observer;

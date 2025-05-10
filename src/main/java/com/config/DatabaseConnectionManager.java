@@ -1,5 +1,6 @@
-package com.connectionManager;
+package com.config;
 
+import com.config.exception.DatabaseConnectionException;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import java.io.IOException;
@@ -7,7 +8,6 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -30,18 +30,17 @@ public class DatabaseConnectionManager {
     private String configFile;
     
     
-    public DatabaseConnectionManager() {
+    public DatabaseConnectionManager() throws DatabaseConnectionException {
         this(DEFAULT_CONFIG_FILE);
     }
     
     
-    public DatabaseConnectionManager(String configFile) {
+    public DatabaseConnectionManager(String configFile) throws DatabaseConnectionException {
         this.configFile = configFile;
         try {
             initializeDataSource();
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Failed to initialize connection pool", e);
-            throw new RuntimeException("Database connection initialization failed", e);
+            throw new DatabaseConnectionException("Database connection initialization failed: " + e.getMessage(), e);
         }
     }
     
@@ -95,16 +94,11 @@ public class DatabaseConnectionManager {
     
     
     public Connection getConnection() throws SQLException {
-        try {
-            Connection connection = dataSource.getConnection();
-            if (connection == null) {
-                throw new SQLException("Failed to obtain database connection from pool");
-            }
-            return connection;
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Error obtaining connection from pool", e);
-            throw e;
+        Connection connection = dataSource.getConnection();
+        if (connection == null) {
+            throw new SQLException("Failed to obtain database connection from pool");
         }
+        return connection;
     }
     
     
