@@ -50,6 +50,10 @@ public class Room {
         eventManager.addObserver(observer);
     }
 
+    public void notifyObservers(String message) {
+        eventManager.notifyObservers(message);
+    }
+
     public void removeObserver(Observer observer) {
         eventManager.removeObserver(observer);
     }
