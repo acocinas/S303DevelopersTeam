@@ -28,6 +28,7 @@ public class RoomMenu {
 			System.out.println("2. Remove room by ID");
 			System.out.println("3. Add thematic clue to a room");
 			System.out.println("4. Add decoration item to a room");
+			System.out.println("5. Add puzzle to a room");
 			System.out.println("0. Back to main menu");
 			System.out.print("Select an option: ");
 
@@ -51,6 +52,9 @@ public class RoomMenu {
 					break;
 				case 4:
 					roomContentService.addDecorationItemToRoom();
+					break;
+				case 5:
+					roomContentService.addPuzzleToRoom();
 					break;
 				case 0:
 					System.out.println("Returning to main menu...");
