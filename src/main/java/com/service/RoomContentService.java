@@ -7,6 +7,7 @@ import com.factory.FactoryProducer;
 import com.interfaces.AbstractFactory;
 import com.model.Clue;
 import com.model.DecorationItem;
+import com.model.Puzzle;
 import com.model.Room;
 
 import java.util.Scanner;
@@ -104,5 +105,41 @@ public class RoomContentService {
 		}
 	}
 
+	public void addPuzzleToRoom() {
+		try {
+			System.out.print("Enter the ID of the room to add a puzzle to: ");
+			while (!scanner.hasNextInt()) {
+				System.out.print("Please enter a valid numeric ID: ");
+				scanner.next();
+			}
+			int roomId = scanner.nextInt();
+			scanner.nextLine();
+
+			Room room = inventoryService.getRoomById(roomId);
+			if (room == null) {
+				System.out.println("❌ Room not found with ID: " + roomId);
+				return;
+			}
+
+			System.out.print("Enter the puzzle description: ");
+			String description = scanner.nextLine().trim();
+
+			System.out.print("Enter the puzzle solution: ");
+			String solution = scanner.nextLine().trim();
+
+			Puzzle puzzle = Puzzle.builder()
+					.description(description)
+					.solution(solution)
+					.build();
+
+			room.addPuzzle(puzzle);
+
+			inventoryService.updateRoom(room);
+
+			System.out.println("✅ Puzzle added to room '" + room.getName() + "' successfully.");
+		} catch (DAOException e) {
+			System.out.println("❌ Error while adding puzzle: " + e.getMessage());
+		}
+	}
 }
 
