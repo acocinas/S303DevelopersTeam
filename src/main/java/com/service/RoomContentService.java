@@ -9,21 +9,20 @@ import com.model.Clue;
 import com.model.DecorationItem;
 import com.model.Puzzle;
 import com.model.Room;
-
-import java.util.Scanner;
-import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.Optional;
+import java.util.Scanner;
 
 @Slf4j
 public class RoomContentService {
-	private final InventoryService inventoryService;
-	private final Scanner scanner;
-	
 	private static final String ENTER_ROOM_ID = "Enter the ID of the room to add a {} to: ";
 	private static final String ENTER_VALID_ID = "Please enter a valid numeric ID: ";
 	private static final String ROOM_NOT_FOUND = "❌ Room not found with ID: {}";
 	private static final String ITEM_ADDED = "✅ {} added to room '{}' successfully.";
 	private static final String INVALID_INPUT = "Invalid input detected";
+	private final InventoryService inventoryService;
+	private final Scanner scanner;
 
 	public RoomContentService(InventoryService inventoryService, Scanner scanner) {
 		this.inventoryService = inventoryService;
@@ -93,7 +92,7 @@ public class RoomContentService {
 			String materialInput = scanner.nextLine().trim().toUpperCase();
 
 			Optional<Material> materialOptional = parseMaterial(materialInput);
-			if (!materialOptional.isPresent()) {
+			if (materialOptional.isEmpty()) {
 				return;
 			}
 			Material material = materialOptional.get();
@@ -112,7 +111,7 @@ public class RoomContentService {
 			log.error("Error while adding decoration item: {}", e.getMessage(), e);
 		}
 	}
-	
+
 	private Optional<Material> parseMaterial(String materialInput) {
 		try {
 			return Optional.of(Material.valueOf(materialInput));
