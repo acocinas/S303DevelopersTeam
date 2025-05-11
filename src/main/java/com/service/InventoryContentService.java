@@ -6,10 +6,16 @@ import com.enums.Material;
 
 import java.util.Map;
 import java.util.Scanner;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class InventoryContentService {
 	private final InventoryService inventoryService;
 	private final Scanner scanner;
+	
+	private static final String ITEM_COUNT_FORMAT = "  {}: {}";
+	private static final String INVALID_INPUT = "Invalid input detected";
+	private static final String ENTER_VALID_ID = "Please enter a valid numeric ID: ";
 
 	public InventoryContentService(InventoryService inventoryService, Scanner scanner) {
 		this.inventoryService = inventoryService;
@@ -18,102 +24,105 @@ public class InventoryContentService {
 
 	public void showInventorySummary() {
 		try {
-			System.out.println("\n--- INVENTORY SUMMARY ---");
+			log.info("\n--- INVENTORY SUMMARY ---");
 
-			System.out.println("\nRooms by Difficulty:");
+			log.info("\nRooms by Difficulty:");
 			Map<Difficulty, Long> rooms = inventoryService.getRoomCountByDifficulty();
 
 			if (rooms.isEmpty()) {
-				System.out.println("  No rooms available.");
+				log.info("  No rooms available.");
 			} else {
 				rooms.forEach((difficulty, count) ->
-						System.out.println("  " + difficulty + ": " + count));
+						log.info(ITEM_COUNT_FORMAT, difficulty, count));
 			}
 
-			System.out.println("\nClues by Theme:");
+			log.info("\nClues by Theme:");
 			Map<String, Long> clues = inventoryService.getClueCountByTheme();
 
 			if (clues.isEmpty()) {
-				System.out.println("  No clues available.");
+				log.info("  No clues available.");
 			} else {
 				clues.forEach((theme, count) ->
-						System.out.println("  " + theme + ": " + count));
+						log.info(ITEM_COUNT_FORMAT, theme, count));
 			}
 
-			System.out.println("\nDecorations by Material:");
+			log.info("\nDecorations by Material:");
 			Map<Material, Long> decorations = inventoryService.getDecorationCountByMaterial();
 			if (decorations.isEmpty()) {
-				System.out.println("  No decoration items available.");
+				log.info("  No decoration items available.");
 			} else {
 				decorations.forEach((material, count) ->
-						System.out.println("  " + material + ": " + count));
+						log.info(ITEM_COUNT_FORMAT, material, count));
 			}
 
-			System.out.println("\n✅ Inventory summary displayed successfully.");
+			log.info("\n✅ Inventory summary displayed successfully.");
 
 		} catch (DAOException e) {
-			System.out.println("❌ Failed to retrieve inventory summary: " + e.getMessage());
+			log.error("Failed to retrieve inventory summary: {}", e.getMessage(), e);
 		}
 	}
 
 	public void showInventoryValue() {
 		try {
-			System.out.println("\n--- INVENTORY VALUE ---");
+			log.info("\n--- INVENTORY VALUE ---");
 			double totalValue = inventoryService.calculateTotalInventoryValue();
-			System.out.printf("💰 Total inventory value: €%.2f%n", totalValue);
+			log.info("💰 Total inventory value: €{:.2f}", totalValue);
 		} catch (DAOException e) {
-			System.out.println("❌ Failed to calculate inventory value: " + e.getMessage());
+			log.error("Failed to calculate inventory value: {}", e.getMessage(), e);
 		}
 	}
 
 	public void removeRoom() {
 		try {
-			System.out.print("Enter the ID of the room to remove: ");
+			log.info("Enter the ID of the room to remove: ");
 			while (!scanner.hasNextInt()) {
-				System.out.print("Please enter a valid numeric ID: ");
+				log.warn(INVALID_INPUT);
+				log.info(ENTER_VALID_ID);
 				scanner.next();
 			}
 			int roomId = scanner.nextInt();
 			scanner.nextLine();
 
 			inventoryService.removeRoomFromInventory(roomId);
-			System.out.println("✅ Room with ID " + roomId + " was successfully removed.");
+			log.info("✅ Room with ID {} was successfully removed.", roomId);
 		} catch (DAOException e) {
-			System.out.println("❌ Could not remove room: " + e.getMessage());
+			log.error("Could not remove room: {}", e.getMessage(), e);
 		}
 	}
 
 	public void removeClue() {
 		try {
-			System.out.print("Enter the ID of the clue to remove: ");
+			log.info("Enter the ID of the clue to remove: ");
 			while (!scanner.hasNextInt()) {
-				System.out.print("Please enter a valid numeric ID: ");
+				log.warn(INVALID_INPUT);
+				log.info(ENTER_VALID_ID);
 				scanner.next();
 			}
 			int clueId = scanner.nextInt();
 			scanner.nextLine();
 
 			inventoryService.removeClueFromInventory(clueId);
-			System.out.println("✅ Clue with ID " + clueId + " was successfully removed.");
+			log.info("✅ Clue with ID {} was successfully removed.", clueId);
 		} catch (DAOException e) {
-			System.out.println("❌ Could not remove clue: " + e.getMessage());
+			log.error("Could not remove clue: {}", e.getMessage(), e);
 		}
 	}
 
 	public void removeDecoration() {
 		try {
-			System.out.print("Enter the ID of the decoration item to remove: ");
+			log.info("Enter the ID of the decoration item to remove: ");
 			while (!scanner.hasNextInt()) {
-				System.out.print("Please enter a valid numeric ID: ");
+				log.warn(INVALID_INPUT);
+				log.info(ENTER_VALID_ID);
 				scanner.next();
 			}
 			int decorationId = scanner.nextInt();
 			scanner.nextLine();
 
 			inventoryService.removeDecorationFromInventory(decorationId);
-			System.out.println("✅ Decoration item with ID " + decorationId + " was successfully removed.");
+			log.info("✅ Decoration item with ID {} was successfully removed.", decorationId);
 		} catch (DAOException e) {
-			System.out.println("❌ Could not remove decoration item: " + e.getMessage());
+			log.error("Could not remove decoration item: {}", e.getMessage(), e);
 		}
 	}
 }

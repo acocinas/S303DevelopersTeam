@@ -11,10 +11,19 @@ import com.model.Puzzle;
 import com.model.Room;
 
 import java.util.Scanner;
+import java.util.Optional;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class RoomContentService {
 	private final InventoryService inventoryService;
 	private final Scanner scanner;
+	
+	private static final String ENTER_ROOM_ID = "Enter the ID of the room to add a {} to: ";
+	private static final String ENTER_VALID_ID = "Please enter a valid numeric ID: ";
+	private static final String ROOM_NOT_FOUND = "❌ Room not found with ID: {}";
+	private static final String ITEM_ADDED = "✅ {} added to room '{}' successfully.";
+	private static final String INVALID_INPUT = "Invalid input detected";
 
 	public RoomContentService(InventoryService inventoryService, Scanner scanner) {
 		this.inventoryService = inventoryService;
@@ -23,10 +32,10 @@ public class RoomContentService {
 
 	public void addClueToRoom() {
 		try {
-
-			System.out.print("Enter the ID of the room to add a clue to: ");
+			log.info(ENTER_ROOM_ID, "clue");
 			while (!scanner.hasNextInt()) {
-				System.out.print("Please enter a valid numeric ID: ");
+				log.warn(INVALID_INPUT);
+				log.info(ENTER_VALID_ID);
 				scanner.next();
 			}
 			int roomId = scanner.nextInt();
@@ -34,14 +43,14 @@ public class RoomContentService {
 
 			Room room = inventoryService.getRoomById(roomId);
 			if (room == null) {
-				System.out.println("❌ Room not found with ID: " + roomId);
+				log.warn(ROOM_NOT_FOUND, roomId);
 				return;
 			}
 
-			System.out.print("Enter the clue description: ");
+			log.info("Enter the clue description: ");
 			String description = scanner.nextLine().trim();
 
-			System.out.print("Enter the clue theme: ");
+			log.info("Enter the clue theme: ");
 			String theme = scanner.nextLine().trim();
 
 			Difficulty difficulty = room.getDifficulty();
@@ -53,18 +62,19 @@ public class RoomContentService {
 
 			inventoryService.updateRoom(room);
 
-			System.out.println("✅ Clue added to room '" + room.getName() + "' successfully.");
+			log.info(ITEM_ADDED, "Clue", room.getName());
 
 		} catch (DAOException e) {
-			System.out.println("❌ Error while adding clue: " + e.getMessage());
+			log.error("Error while adding clue: {}", e.getMessage(), e);
 		}
 	}
 
 	public void addDecorationItemToRoom() {
 		try {
-			System.out.print("Enter the ID of the room to add a decoration item to: ");
+			log.info(ENTER_ROOM_ID, "decoration item");
 			while (!scanner.hasNextInt()) {
-				System.out.print("Please enter a valid numeric ID: ");
+				log.warn(INVALID_INPUT);
+				log.info(ENTER_VALID_ID);
 				scanner.next();
 			}
 			int roomId = scanner.nextInt();
@@ -72,23 +82,21 @@ public class RoomContentService {
 
 			Room room = inventoryService.getRoomById(roomId);
 			if (room == null) {
-				System.out.println("❌ Room not found with ID: " + roomId);
+				log.warn(ROOM_NOT_FOUND, roomId);
 				return;
 			}
 
-			System.out.print("Enter the name of the decoration item: ");
+			log.info("Enter the name of the decoration item: ");
 			String name = scanner.nextLine().trim();
 
-			System.out.print("Enter the material (WOOD, METAL, PLASTIC, PAPER, GLASS, FABRIC, STONE, ELECTRONIC): ");
+			log.info("Enter the material (WOOD, METAL, PLASTIC, PAPER, GLASS, FABRIC, STONE, ELECTRONIC): ");
 			String materialInput = scanner.nextLine().trim().toUpperCase();
 
-			Material material;
-			try {
-				material = Material.valueOf(materialInput);
-			} catch (IllegalArgumentException e) {
-				System.out.println("❌ Invalid material type.");
+			Optional<Material> materialOptional = parseMaterial(materialInput);
+			if (!materialOptional.isPresent()) {
 				return;
 			}
+			Material material = materialOptional.get();
 
 			Difficulty difficulty = room.getDifficulty();
 			AbstractFactory factory = FactoryProducer.getFactory(difficulty);
@@ -99,17 +107,27 @@ public class RoomContentService {
 
 			inventoryService.updateRoom(room);
 
-			System.out.println("✅ Decoration item added to room '" + room.getName() + "' successfully.");
+			log.info(ITEM_ADDED, "Decoration item", room.getName());
 		} catch (DAOException e) {
-			System.out.println("❌ Error while adding decoration item: " + e.getMessage());
+			log.error("Error while adding decoration item: {}", e.getMessage(), e);
+		}
+	}
+	
+	private Optional<Material> parseMaterial(String materialInput) {
+		try {
+			return Optional.of(Material.valueOf(materialInput));
+		} catch (IllegalArgumentException e) {
+			log.warn("Invalid material type: {}", materialInput);
+			return Optional.empty();
 		}
 	}
 
 	public void addPuzzleToRoom() {
 		try {
-			System.out.print("Enter the ID of the room to add a puzzle to: ");
+			log.info(ENTER_ROOM_ID, "puzzle");
 			while (!scanner.hasNextInt()) {
-				System.out.print("Please enter a valid numeric ID: ");
+				log.warn(INVALID_INPUT);
+				log.info(ENTER_VALID_ID);
 				scanner.next();
 			}
 			int roomId = scanner.nextInt();
@@ -117,14 +135,14 @@ public class RoomContentService {
 
 			Room room = inventoryService.getRoomById(roomId);
 			if (room == null) {
-				System.out.println("❌ Room not found with ID: " + roomId);
+				log.warn(ROOM_NOT_FOUND, roomId);
 				return;
 			}
 
-			System.out.print("Enter the puzzle description: ");
+			log.info("Enter the puzzle description: ");
 			String description = scanner.nextLine().trim();
 
-			System.out.print("Enter the puzzle solution: ");
+			log.info("Enter the puzzle solution: ");
 			String solution = scanner.nextLine().trim();
 
 			Puzzle puzzle = Puzzle.builder()
@@ -136,9 +154,9 @@ public class RoomContentService {
 
 			inventoryService.updateRoom(room);
 
-			System.out.println("✅ Puzzle added to room '" + room.getName() + "' successfully.");
+			log.info(ITEM_ADDED, "Puzzle", room.getName());
 		} catch (DAOException e) {
-			System.out.println("❌ Error while adding puzzle: " + e.getMessage());
+			log.error("Error while adding puzzle: {}", e.getMessage(), e);
 		}
 	}
 }
