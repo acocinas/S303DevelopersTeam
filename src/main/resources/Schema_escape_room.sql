@@ -210,24 +210,3 @@ CREATE TABLE IF NOT EXISTS `certificates` (
     ON DELETE CASCADE
     ON UPDATE CASCADE
 ) ENGINE = InnoDB;
-
--- -----------------------------------------------------
--- Insert initial data
--- -----------------------------------------------------
-
--- Difficulty levels
-INSERT INTO `difficulty` (`name`, `display_name`, `time_limit`) VALUES
-('EASY', 'Easy', 60),
-('MEDIUM', 'Medium', 50),
-('HARD', 'Hard', 45);
-
--- Materials
-INSERT INTO `materials` (`name`, `display_name`) VALUES
-('WOOD', 'Wood'),
-('METAL', 'Metal'),
-('PLASTIC', 'Plastic'),
-('PAPER', 'Paper'),
-('GLASS', 'Glass'),
-('FABRIC', 'Fabric'),
-('STONE', 'Stone'),
-('ELECTRONIC', 'Electronic');
