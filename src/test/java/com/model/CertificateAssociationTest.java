@@ -1,17 +1,13 @@
-package com.integration;
+package com.model;
 
 import com.enums.Difficulty;
-import com.model.Certificate;
-import com.model.Player;
-import com.model.Room;
-import com.model.TicketSale;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TicketCertificateIntegrationTest {
+class CertificateAssociationTest {
 
     @Test
     void testTicketAndCertificateAssociation() {
