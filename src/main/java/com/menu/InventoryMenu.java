@@ -3,7 +3,9 @@ package com.menu;
 import com.service.InventoryContentService;
 
 import java.util.Scanner;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class InventoryMenu {
 	private final InventoryContentService inventoryContentService;
 	private final Scanner scanner;
@@ -16,17 +18,18 @@ public class InventoryMenu {
 	public void manageInventory() {
 		int option;
 		do {
-			System.out.println("\n--- INVENTORY MANAGEMENT ---");
-			System.out.println("1. Show inventory summary");
-			System.out.println("2. Show total inventory value");
-			System.out.println("3. Remove room");
-			System.out.println("4. Remove clue");
-			System.out.println("5. Remove decoration item");
-			System.out.println("0. Back to main menu");
-			System.out.print("Select an option: ");
+			log.info("\n--- INVENTORY MANAGEMENT ---");
+			log.info("1. Show inventory summary");
+			log.info("2. Show total inventory value");
+			log.info("3. Remove room");
+			log.info("4. Remove clue");
+			log.info("5. Remove decoration item");
+			log.info("0. Back to main menu");
+			log.info("Select an option: ");
 
 			while (!scanner.hasNextInt()) {
-				System.out.print("Please enter a valid number: ");
+				log.warn("Invalid input detected");
+				log.info("Please enter a valid number: ");
 				scanner.next();
 			}
 
@@ -50,10 +53,11 @@ public class InventoryMenu {
 					inventoryContentService.removeDecoration();
 					break;
 				case 0:
-					System.out.println("Returning to main menu...");
+					log.info("Returning to main menu...");
 					break;
 				default:
-					System.out.println("Invalid option.");
+					log.warn("Invalid option selected: {}", option);
+					log.info("Invalid option.");
 			}
 		} while (option != 0);
 	}
