@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Date;
 import java.util.Scanner;
 
+import static com.utils.LogMessages.*;
+
 @Slf4j
 public class PlayerContentService {
 	private final EscapeRoomService escapeRoomService;
@@ -20,8 +22,8 @@ public class PlayerContentService {
 		try {
 			log.info("Enter the ID of the player:");
 			while (!scanner.hasNextInt()) {
-				log.warn("Invalid input detected");
-				log.info("Please enter a valid numeric ID:");
+				log.warn(INVALID_INPUT);
+				log.info(ENTER_VALID_ID);
 				scanner.next();
 			}
 			int playerId = scanner.nextInt();
@@ -29,8 +31,8 @@ public class PlayerContentService {
 
 			log.info("Enter the ID of the room:");
 			while (!scanner.hasNextInt()) {
-				log.warn("Invalid input detected");
-				log.info("Please enter a valid numeric ID:");
+				log.warn(INVALID_INPUT);
+				log.info(ENTER_VALID_ID);
 				scanner.next();
 			}
 			int roomId = scanner.nextInt();
@@ -40,10 +42,10 @@ public class PlayerContentService {
 
 			escapeRoomService.sellTicket(playerId, roomId, date);
 
-			log.info("✅ Ticket successfully sold to player with ID {} for room ID {}", playerId, roomId);
+			log.info(TICKET_SOLD, playerId, roomId);
 
 		} catch (DAOException e) {
-			log.error("❌ Failed to sell ticket: {}", e.getMessage(), e);
+			log.error(TICKET_SALE_ERROR, e.getMessage(), e);
 		}
 	}
 
@@ -51,8 +53,8 @@ public class PlayerContentService {
 		try {
 			log.info("Enter the ID of the player:");
 			while (!scanner.hasNextInt()) {
-				log.warn("Invalid input detected");
-				log.info("Please enter a valid numeric ID:");
+				log.warn(INVALID_INPUT);
+				log.info(ENTER_VALID_ID);
 				scanner.next();
 			}
 			int playerId = scanner.nextInt();
@@ -60,8 +62,8 @@ public class PlayerContentService {
 
 			log.info("Enter the ID of the completed room:");
 			while (!scanner.hasNextInt()) {
-				log.warn("Invalid input detected");
-				log.info("Please enter a valid numeric ID:");
+				log.warn(INVALID_INPUT);
+				log.info(ENTER_VALID_ID);
 				scanner.next();
 			}
 			int roomId = scanner.nextInt();
@@ -71,10 +73,10 @@ public class PlayerContentService {
 
 			escapeRoomService.issueCertificate(playerId, roomId, completionDate);
 
-			log.info("✅ Certificate issued to player {} for room {}", playerId, roomId);
+			log.info(CERTIFICATE_ISSUED, playerId, roomId);
 
 		} catch (DAOException e) {
-			log.error("❌ Failed to issue certificate: {}", e.getMessage(), e);
+			log.error(CERTIFICATE_ERROR, e.getMessage(), e);
 		}
 	}
 }
