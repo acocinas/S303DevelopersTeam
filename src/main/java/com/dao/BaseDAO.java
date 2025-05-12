@@ -17,15 +17,19 @@ public abstract class BaseDAO<T, I> implements GenericDAO<T, I> {
     protected final Map<I, T> entities = new HashMap<>();
     protected AtomicInteger idSequence = new AtomicInteger(1);
     
+    private static final String DELETING_ENTITY = "Deleting entity with id: {}";
+    private static final String FINDING_ENTITY = "Finding entity with id: {}";
+    private static final String FINDING_ALL = "Finding all entities";
+    
     @Override
     public List<T> findAll() throws DAOException {
-        log.debug("Finding all entities");
+        log.debug(FINDING_ALL);
         return new ArrayList<>(entities.values());
     }
     
     @Override
     public Optional<T> findById(I id) throws DAOException {
-        log.debug("Finding entity with id: {}", id);
+        log.debug(FINDING_ENTITY, id);
         return Optional.ofNullable(entities.get(id));
     }
     
@@ -33,14 +37,13 @@ public abstract class BaseDAO<T, I> implements GenericDAO<T, I> {
     public void delete(T entity) throws DAOException {
         I id = getEntityId(entity);
         if (id != null) {
-            log.debug("Deleting entity with id: {}", id);
-            entities.remove(id);
+            deleteById(id);
         }
     }
     
     @Override
     public void deleteById(I id) throws DAOException {
-        log.debug("Deleting entity with id: {}", id);
+        log.debug(DELETING_ENTITY, id);
         entities.remove(id);
     }
     

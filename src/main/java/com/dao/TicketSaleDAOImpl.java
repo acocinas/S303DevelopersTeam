@@ -2,8 +2,6 @@ package com.dao;
 
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import com.interfaces.TicketSaleDAO;
 import com.dao.exception.DAOException;
 import com.model.TicketSale;
