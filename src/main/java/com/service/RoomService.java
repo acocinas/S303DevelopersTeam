@@ -38,7 +38,7 @@ public class RoomService {
 			String input = scanner.nextLine().trim().toUpperCase();
 
 			Optional<Difficulty> difficultyOptional = parseDifficulty(input);
-			if (!difficultyOptional.isPresent()) {
+			if (difficultyOptional.isEmpty()) {
 				return;
 			}
 			Difficulty difficulty = difficultyOptional.get();
