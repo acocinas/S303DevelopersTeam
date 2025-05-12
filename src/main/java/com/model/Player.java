@@ -33,6 +33,6 @@ public class Player implements Observer {
 
 	@Override
 	public void getNotification(String message) {
-		log.info("📨 Notificación para {}: {}", name, message);
+		log.info("📨 Notification for {}: {}", name, message);
 	}
 }
