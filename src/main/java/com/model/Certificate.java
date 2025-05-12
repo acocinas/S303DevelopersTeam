@@ -4,9 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.Builder;
 import lombok.AllArgsConstructor;
-
+import lombok.extern.slf4j.Slf4j;
 import java.time.LocalDateTime;
 
+@Slf4j
 @Builder
 @AllArgsConstructor
 @Setter
@@ -25,7 +26,7 @@ public class Certificate{
 	}
 
     public void getCongratulationMessage(){
-		System.out.println("Congratulation! You have beaten the room " + roomName + "!");
+		log.info("Congratulation! You have beaten the room {}!", roomName);
 	}
 
 	@Override
