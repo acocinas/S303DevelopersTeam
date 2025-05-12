@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 public class InventoryContentService {
 	private final InventoryService inventoryService;
 	private final Scanner scanner;
-	
+
 	private static final String ITEM_COUNT_FORMAT = "  {}: {}";
 	private static final String INVALID_INPUT = "Invalid input detected";
 	private static final String ENTER_VALID_ID = "Please enter a valid numeric ID: ";
@@ -55,7 +55,7 @@ public class InventoryContentService {
 						log.info(ITEM_COUNT_FORMAT, material, count));
 			}
 
-			log.info("\n✅ Inventory summary displayed successfully.");
+			log.info("\nInventory summary displayed successfully.");
 
 		} catch (DAOException e) {
 			log.error("Failed to retrieve inventory summary: {}", e.getMessage(), e);
@@ -66,7 +66,7 @@ public class InventoryContentService {
 		try {
 			log.info("\n--- INVENTORY VALUE ---");
 			double totalValue = inventoryService.calculateTotalInventoryValue();
-			log.info("💰 Total inventory value: €{:.2f}", totalValue);
+			log.info("Total inventory value: €{:.2f}", totalValue);
 		} catch (DAOException e) {
 			log.error("Failed to calculate inventory value: {}", e.getMessage(), e);
 		}
@@ -84,7 +84,7 @@ public class InventoryContentService {
 			scanner.nextLine();
 
 			inventoryService.removeRoomFromInventory(roomId);
-			log.info("✅ Room with ID {} was successfully removed.", roomId);
+			log.info("Room with ID {} was successfully removed.", roomId);
 		} catch (DAOException e) {
 			log.error("Could not remove room: {}", e.getMessage(), e);
 		}
@@ -102,7 +102,7 @@ public class InventoryContentService {
 			scanner.nextLine();
 
 			inventoryService.removeClueFromInventory(clueId);
-			log.info("✅ Clue with ID {} was successfully removed.", clueId);
+			log.info("Clue with ID {} was successfully removed.", clueId);
 		} catch (DAOException e) {
 			log.error("Could not remove clue: {}", e.getMessage(), e);
 		}
@@ -120,7 +120,7 @@ public class InventoryContentService {
 			scanner.nextLine();
 
 			inventoryService.removeDecorationFromInventory(decorationId);
-			log.info("✅ Decoration item with ID {} was successfully removed.", decorationId);
+			log.info("Decoration item with ID {} was successfully removed.", decorationId);
 		} catch (DAOException e) {
 			log.error("Could not remove decoration item: {}", e.getMessage(), e);
 		}
