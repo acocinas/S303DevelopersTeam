@@ -5,23 +5,20 @@ import com.interfaces.AbstractFactory;
 
 public class FactoryProducer {
     
-        public static AbstractFactory getFactory(Difficulty difficulty) {
+    private FactoryProducer() {
+        throw new IllegalStateException("Utility class");
+    }   
+    public static AbstractFactory getFactory(Difficulty difficulty) {
         if (difficulty == null) {
             throw new IllegalArgumentException("Difficulty cannot be null");
         }
         
-        switch (difficulty) {
-            case HARD:
-                return new RoomFactoryHard();
-            case MEDIUM:
-                return new RoomFactoryMedium();
-            case EASY:
-                return new RoomFactoryEasy();
-            default:
-                throw new IllegalArgumentException("Unsupported difficulty level: " + difficulty);
-        }
+        return switch (difficulty) {
+            case HARD -> new RoomFactoryHard();
+            case MEDIUM -> new RoomFactoryMedium();
+            case EASY -> new RoomFactoryEasy();
+        };
     }
-    
 
     public static AbstractFactory getFactoryByName(String difficultyName) {
         if (difficultyName == null || difficultyName.trim().isEmpty()) {
@@ -34,6 +31,7 @@ public class FactoryProducer {
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Invalid difficulty name: " + difficultyName, e);
         }
-        }
     }
+}
+    
             
