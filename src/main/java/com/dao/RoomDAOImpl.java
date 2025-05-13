@@ -1,8 +1,6 @@
 package com.dao;
 
 import java.util.List;
-import java.util.stream.Collectors;
-
 import com.interfaces.RoomDAO;
 import com.dao.exception.DAOException;
 import com.enums.Difficulty;

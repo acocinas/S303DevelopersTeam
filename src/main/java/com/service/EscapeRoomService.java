@@ -71,6 +71,8 @@ public class EscapeRoomService {
         log.info("Total revenue calculated: {}", revenue);
         return revenue;
     }
+
+
     
     public List<Certificate> getPlayerCertificates(Integer playerId) throws DAOException {
         log.debug("Getting certificates for player: {}", playerId);

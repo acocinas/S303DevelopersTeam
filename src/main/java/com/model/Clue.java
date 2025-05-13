@@ -11,6 +11,7 @@ public class Clue {
     private String description;
     private String theme;
     private double price;
+    private Room room;
 
     @Builder.Default
     private boolean revealed = false;

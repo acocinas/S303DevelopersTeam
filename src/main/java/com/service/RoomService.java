@@ -3,16 +3,21 @@ package com.service;
 import com.enums.Difficulty;
 import com.factory.FactoryProducer;
 import com.interfaces.AbstractFactory;
-import com.model.Clue;
 import com.model.Room;
-import com.service.InventoryService;
 import com.dao.exception.DAOException;
 
 import java.util.Scanner;
+import java.util.Optional;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class RoomService {
 	private final InventoryService inventoryService;
 	private final Scanner scanner;
+	
+	private static final String ENTER_VALID_ID = "Please enter a valid numeric ID: ";
+	private static final String INVALID_INPUT = "Invalid input detected";
+	private static final String ROOM_REMOVED = "✅ Room with ID {} was successfully removed.";
 
 	public RoomService(InventoryService inventoryService, Scanner scanner) {
 		this.inventoryService = inventoryService;
@@ -21,41 +26,49 @@ public class RoomService {
 
 	public void createRoom() {
 		try {
-			System.out.print("Enter the room theme: ");
+			log.info("Enter the room theme: ");
 			String theme = scanner.nextLine().trim();
 
 			if (theme.isEmpty()) {
-				System.out.println("⚠️ Theme cannot be empty.");
+				log.warn("Theme cannot be empty.");
 				return;
 			}
 
-			System.out.print("Select difficulty (EASY, MEDIUM, HARD): ");
+			log.info("Select difficulty (EASY, MEDIUM, HARD): ");
 			String input = scanner.nextLine().trim().toUpperCase();
 
-			Difficulty difficulty;
-			try {
-				difficulty = Difficulty.valueOf(input);
-			} catch (IllegalArgumentException e) {
-				System.out.println("⚠️ Invalid difficulty. Please enter EASY, MEDIUM, or HARD.");
+			Optional<Difficulty> difficultyOptional = parseDifficulty(input);
+			if (difficultyOptional.isEmpty()) {
 				return;
 			}
+			Difficulty difficulty = difficultyOptional.get();
 
 			AbstractFactory factory = FactoryProducer.getFactory(difficulty);
 			Room room = factory.createRoom(theme);
 
 			inventoryService.addRoom(room);
 
-			System.out.println("✅ Room created successfully with ID: " + room.getId());
+			log.info("✅ Room created successfully with ID: {}", room.getId());
 		} catch (DAOException e) {
-			System.out.println("❌ Failed to create room: " + e.getMessage());
+			log.error("Failed to create room: {}", e.getMessage(), e);
+		}
+	}
+	
+	private Optional<Difficulty> parseDifficulty(String input) {
+		try {
+			return Optional.of(Difficulty.valueOf(input));
+		} catch (IllegalArgumentException e) {
+			log.warn("Invalid difficulty: {}. Please enter EASY, MEDIUM, or HARD.", input);
+			return Optional.empty();
 		}
 	}
 
 	public void removeRoomById() {
 		try {
-			System.out.print("Enter the ID of the room to remove: ");
+			log.info("Enter the ID of the room to remove: ");
 			while (!scanner.hasNextInt()) {
-				System.out.print("Please enter a valid numeric ID: ");
+				log.warn(INVALID_INPUT);
+				log.info(ENTER_VALID_ID);
 				scanner.next();
 			}
 
@@ -64,49 +77,9 @@ public class RoomService {
 
 			inventoryService.removeRoomFromInventory(roomId);
 
-			System.out.println("✅ Room with ID " + roomId + " was successfully removed.");
+			log.info(ROOM_REMOVED, roomId);
 		} catch (DAOException e) {
-			System.out.println("❌ Could not remove room: " + e.getMessage());
+			log.error("Could not remove room: {}", e.getMessage(), e);
 		}
 	}
-
-	public void addClueToRoom() {
-		try {
-
-			System.out.print("Enter the ID of the room to add a clue to: ");
-			while (!scanner.hasNextInt()) {
-				System.out.print("Please enter a valid numeric ID: ");
-				scanner.next();
-			}
-			int roomId = scanner.nextInt();
-			scanner.nextLine();
-
-			Room room = inventoryService.getRoomById(roomId);
-			if (room == null) {
-				System.out.println("❌ Room not found with ID: " + roomId);
-				return;
-			}
-
-			System.out.print("Enter the clue description: ");
-			String description = scanner.nextLine().trim();
-
-			System.out.print("Enter the clue theme: ");
-			String theme = scanner.nextLine().trim();
-
-			Difficulty difficulty = room.getDifficulty();
-			AbstractFactory factory = FactoryProducer.getFactory(difficulty);
-
-			Clue clue = factory.createClue(description, theme);
-
-			room.getClues().add(clue);
-
-			inventoryService.updateRoom(room);
-
-			System.out.println("✅ Clue added to room '" + room.getName() + "' successfully.");
-
-		} catch (DAOException e) {
-			System.out.println("❌ Error while adding clue: " + e.getMessage());
-		}
-	}
-
 }

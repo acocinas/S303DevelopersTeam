@@ -59,7 +59,7 @@ public class CertificateDAOImpl extends BaseDAO<Certificate, Integer> implements
     @Override
     protected void setEntityId(Certificate entity, Integer id) {
         if (id != null) {
-            entity.setId(id.intValue());
+            entity.setId(id);
         }
     }
 }

@@ -12,6 +12,7 @@ public class DecorationItem {
     private String name;
     private Material material;
     private double price;
+    private Room room;
 
     @Builder.Default
     private boolean interactive = false;
