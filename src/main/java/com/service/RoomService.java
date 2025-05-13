@@ -17,7 +17,7 @@ public class RoomService {
 	
 	private static final String ENTER_VALID_ID = "Please enter a valid numeric ID: ";
 	private static final String INVALID_INPUT = "Invalid input detected";
-	private static final String ROOM_REMOVED = "✅ Room with ID {} was successfully removed.";
+	private static final String ROOM_REMOVED = "Room with ID {} was successfully removed.";
 
 	public RoomService(InventoryService inventoryService, Scanner scanner) {
 		this.inventoryService = inventoryService;
@@ -48,7 +48,7 @@ public class RoomService {
 
 			inventoryService.addRoom(room);
 
-			log.info("✅ Room created successfully with ID: {}", room.getId());
+			log.info("Room created successfully with ID: {}", room.getId());
 		} catch (DAOException e) {
 			log.error("Failed to create room: {}", e.getMessage(), e);
 		}

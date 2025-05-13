@@ -28,6 +28,6 @@ import static org.junit.jupiter.api.Assertions.*;
         room.addClue(clue);
 
         assertTrue(observer.isNotified(), "Observer should have been notified");
-        assertTrue(observer.getLastMessage().contains("Pista añadida"), "Message should contain 'Pista añadida'");
+        assertTrue(observer.getLastMessage().contains("A change occurred."), "Message should contain 'A change occurred.'");
     }
 }
