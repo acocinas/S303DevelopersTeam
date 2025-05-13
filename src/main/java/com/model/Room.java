@@ -33,17 +33,17 @@ public class Room {
 
     public void addPuzzle(Puzzle puzzle) {
         puzzles.add(puzzle);
-        eventManager.notifyObservers("🧠 Puzzle added to the room: " + name);
+        eventManager.notifyObservers("Puzzle added to the room: " + name);
     }
 
     public void addClue(Clue clue) {
         clues.add(clue);
-        eventManager.notifyObservers("🔍 Clue added to the room: " + name);
+        eventManager.notifyObservers("Clue added to the room: " + name);
     }
 
     public void addDecorationItem(DecorationItem item) {
         decorationItems.add(item);
-        eventManager.notifyObservers("🎨 Decoration added to the room: " + name);
+        eventManager.notifyObservers("Decoration added to the room: " + name);
     }
 
     public void addObserver(Observer observer) {
