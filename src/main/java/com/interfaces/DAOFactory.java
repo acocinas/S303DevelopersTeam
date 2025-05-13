@@ -1,7 +1,5 @@
 package com.interfaces;
 
-
-
 public interface DAOFactory {
     RoomDAO getRoomDAO();
     ClueDAO getClueDAO();

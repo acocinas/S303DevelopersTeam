@@ -25,7 +25,7 @@ public class EventManager implements Observable {
     }
     @Override
     public void notifyObservers() {
-        notifyObservers("⚠️ A change occurred.");
+        notifyObservers("A change occurred.");
     }
 
     @Override
