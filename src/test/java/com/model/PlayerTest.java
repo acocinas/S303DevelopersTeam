@@ -61,6 +61,6 @@ class PlayerTest {
                 .email("mario@example.com")
                 .build();
 
-        assertDoesNotThrow(() -> player.getNotification("🧩 Has desbloqueado una pista"));
+        assertDoesNotThrow(() -> player.getNotification("Has desbloqueado una pista"));
     }
 }
