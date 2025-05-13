@@ -1,4 +1,4 @@
-package com.utils;
+package com.util;
 
 public class LogMessages {
 	// Input validation
