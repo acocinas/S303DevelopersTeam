@@ -10,6 +10,7 @@ import com.model.DecorationItem;
 import com.model.Puzzle;
 import com.model.Room;
 import lombok.extern.slf4j.Slf4j;
+
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.function.Predicate;
@@ -28,12 +29,13 @@ public class RoomContentService {
 
 	/**
 	 * Helper method to get valid room ID and retrieve the room
+	 *
 	 * @param itemType The type of item being added (for logging)
 	 * @return The room if found, null otherwise
 	 */
 	private Room getValidRoom(String itemType) {
 		log.info(ENTER_ROOM_ID, itemType);
-		
+
 		while (!scanner.hasNextInt()) {
 			log.warn(INVALID_INPUT);
 			log.info(ENTER_VALID_ID);
@@ -51,7 +53,8 @@ public class RoomContentService {
 
 	/**
 	 * Generic method to handle adding any item to a room
-	 * @param itemType The type of item being added (for logging)
+	 *
+	 * @param itemType    The type of item being added (for logging)
 	 * @param itemCreator Predicate that creates and adds the item to the room
 	 */
 	private void processRoomItem(String itemType, Predicate<Room> itemCreator) {
@@ -91,6 +94,7 @@ public class RoomContentService {
 
 	public void addDecorationItemToRoom() {
 		processRoomItem("Decoration item", room -> {
+			double price;
 			log.info("Enter the name of the decoration item:");
 			String name = scanner.nextLine().trim();
 
@@ -107,7 +111,24 @@ public class RoomContentService {
 			AbstractFactory factory = FactoryProducer.getFactory(difficulty);
 
 			DecorationItem item = factory.createDecorationItem(name, material);
+
+			do {
+				log.info("Enter the price for this decoration item (e.g. 12.50):");
+				while (!scanner.hasNextDouble()) {
+					log.warn("Invalid input detected");
+					log.info("Please enter a valid decimal number for the price:");
+					scanner.next();
+				}
+				price = scanner.nextDouble();
+				scanner.nextLine();
+				if (price < 0) {
+					log.warn("Price cannot be negative.");
+				}
+			} while (price < 0);
+
+			item.setPrice(price);
 			room.getDecorationItems().add(item);
+			inventoryService.addDecoration(item);
 			return true;
 		});
 	}
