@@ -28,6 +28,6 @@ import static org.junit.jupiter.api.Assertions.*;
         room.addClue(clue);
 
         assertTrue(observer.isNotified(), "Observer should have been notified");
-        assertTrue(observer.getLastMessage().contains("A change occurred."), "Message should contain 'A change occurred.'");
+        assertTrue(observer.getLastMessage().contains("Clue added to the room: Mystery Room"), "Message should contain clue notification");
     }
 }
