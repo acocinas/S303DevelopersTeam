@@ -15,7 +15,7 @@ import java.util.Optional;
 import java.util.Scanner;
 import java.util.function.Predicate;
 
-import static com.utils.LogMessages.*;
+import static com.util.LogMessages.*;
 
 @Slf4j
 public class RoomContentService {
