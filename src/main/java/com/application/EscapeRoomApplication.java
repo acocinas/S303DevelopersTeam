@@ -1,18 +1,29 @@
 package com.application;
 
 import com.controller.EscapeRoomVirtual;
-import com.dao.DAOManager;
-import com.model.Player;
+import com.config.DatabaseConnectionManager;
+import com.util.DatabaseSeeder;
+
+import java.sql.Connection;
+import java.util.logging.Logger;
 
 public class EscapeRoomApplication {
+	private EscapeRoomApplication() {}
+	private static final Logger logger = Logger.getLogger(EscapeRoomApplication.class.getName());
 
-	public void initialize() {
-		Player player = Player.builder()
-				.name("Alfonso")
-				.email("123@efsf.com")
-				.build();
+	public static void initialize() {
+		logger.info("[INIT] Starting Escape Room Application...");
 
-		DAOManager.getDAOFactory().getPlayerDAO().create(player);
+		try {
+			DatabaseConnectionManager connectionManager = new DatabaseConnectionManager();
+			try (Connection connection = connectionManager.getConnection()) {
+				logger.info("[INIT] Seeding database from init.sql...");
+				DatabaseSeeder.seed(connection);
+			}
+		} catch (Exception e) {
+			logger.severe(String.format("[ERROR] Could not initialize database: %s", e.getMessage()));
+			return;
+		}
 
 		EscapeRoomVirtual escapeRoom = new EscapeRoomVirtual();
 		escapeRoom.start();
