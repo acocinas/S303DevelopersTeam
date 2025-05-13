@@ -1,25 +1,28 @@
 package com.service;
 
+import com.dao.ClueDAOImpl;
+import com.dao.DecorationItemDAOImpl;
 import com.dao.exception.DAOException;
 import com.enums.Difficulty;
 import com.enums.Material;
+import com.model.Clue;
+import com.model.DecorationItem;
+import lombok.extern.slf4j.Slf4j;
 
 import java.text.DecimalFormat;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.function.IntConsumer;
 
-import lombok.extern.slf4j.Slf4j;
-
 import static com.util.LogMessages.*;
+
 
 @Slf4j
 public class InventoryContentService {
-	private final InventoryService inventoryService;
-	private final Scanner scanner;
-
 	private static final String ITEM_COUNT_FORMAT = "  {}: {}";
 	private static final DecimalFormat CURRENCY_FORMAT = new DecimalFormat("#,##0.00");
+	private final InventoryService inventoryService;
+	private final Scanner scanner;
 
 	public InventoryContentService(InventoryService inventoryService, Scanner scanner) {
 		this.inventoryService = inventoryService;
@@ -28,6 +31,7 @@ public class InventoryContentService {
 
 	/**
 	 * Helper method to read and validate integer input from user
+	 *
 	 * @param entityType Type of entity to prompt for
 	 * @return The valid integer input
 	 */
@@ -45,7 +49,8 @@ public class InventoryContentService {
 
 	/**
 	 * Generic method to handle removal of any inventory item
-	 * @param itemType Type of item being removed (for logging)
+	 *
+	 * @param itemType         Type of item being removed (for logging)
 	 * @param removalOperation IntConsumer that performs the removal operation
 	 */
 	private void processItemRemoval(String itemType, IntConsumer removalOperation) {
