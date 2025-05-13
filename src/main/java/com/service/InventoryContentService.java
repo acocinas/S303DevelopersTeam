@@ -39,7 +39,7 @@ public class InventoryContentService {
 			scanner.next();
 		}
 		int id = scanner.nextInt();
-		scanner.nextLine(); // consume newline
+		scanner.nextLine();
 		return id;
 	}
 

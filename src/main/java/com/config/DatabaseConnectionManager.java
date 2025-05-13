@@ -33,8 +33,12 @@ public class DatabaseConnectionManager {
     public DatabaseConnectionManager() throws DatabaseConnectionException {
         this(DEFAULT_CONFIG_FILE);
     }
-    
-    
+    // En DatabaseConnectionManager.java
+    public DatabaseConnectionManager(HikariDataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+
     public DatabaseConnectionManager(String configFile) throws DatabaseConnectionException {
         this.configFile = configFile;
         try {

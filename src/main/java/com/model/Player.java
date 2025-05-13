@@ -1,7 +1,10 @@
 package com.model;
 
 import com.interfaces.Observer;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -24,15 +27,17 @@ public class Player implements Observer {
 	private List<TicketSale> tickets = new ArrayList<>();
 
 	public void addTicket(TicketSale ticket) {
+
 		tickets.add(ticket);
 	}
 
 	public void advanceRoomProgress() {
+
 		roomProgress++;
 	}
 
 	@Override
 	public void getNotification(String message) {
-		log.info("📨 Notification for {}: {}", name, message);
+		log.info("Notification for {}: {}", name, message);
 	}
 }
