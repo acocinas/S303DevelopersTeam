@@ -104,16 +104,15 @@ public class DatabaseConnectionManager {
         }
         return connection;
     }
-    
-    
+
+
     public void shutdown() {
-        if (dataSource != null && !dataSource.isClosed()) {
+        if (!isClosed()) {
             dataSource.close();
             LOGGER.info("HikariCP connection pool has been shutdown");
         }
     }
-    
-   
+
     public String getPoolStatus() {
         if (dataSource != null) {
             return String.format(
