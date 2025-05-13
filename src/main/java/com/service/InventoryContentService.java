@@ -11,7 +11,7 @@ import java.util.function.IntConsumer;
 
 import lombok.extern.slf4j.Slf4j;
 
-import static com.utils.LogMessages.*;
+import static com.util.LogMessages.*;
 
 @Slf4j
 public class InventoryContentService {

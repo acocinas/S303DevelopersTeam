@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.Scanner;
 import java.util.function.BiPredicate;
 
-import static com.utils.LogMessages.*;
+import static com.util.LogMessages.*;
 
 @Slf4j
 public class PlayerContentService {
