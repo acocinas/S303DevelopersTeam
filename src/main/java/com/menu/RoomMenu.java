@@ -1,34 +1,40 @@
 package com.menu;
 
 import com.service.InventoryService;
+import com.service.RoomContentService;
 import com.service.RoomService;
 
 import java.util.Scanner;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class RoomMenu {
-	private final InventoryService inventoryService;
 	private final Scanner scanner;
 	private final RoomService roomService;
+	private final RoomContentService roomContentService;
 
 
 	public RoomMenu(InventoryService inventoryService, Scanner scanner) {
-		this.inventoryService = inventoryService;
 		this.scanner = scanner;
 		this.roomService = new RoomService(inventoryService, scanner);
+		this.roomContentService = new RoomContentService(inventoryService, scanner);
 	}
 
-	private void manageRooms() {
+	public void manageRoom() {
 		int option;
 		do {
-			System.out.println("\n--- ROOM MANAGEMENT ---");
-			System.out.println("1. Create new room");
-			System.out.println("2. Remove room by ID");
-			System.out.println("3. Add thematic clue to a room");
-			System.out.println("0. Back to main menu");
-			System.out.print("Select an option: ");
+			log.info("\n--- ROOM MANAGEMENT ---");
+			log.info("1. Create new room");
+			log.info("2. Remove room by ID");
+			log.info("3. Add thematic clue to a room");
+			log.info("4. Add decoration item to a room");
+			log.info("5. Add puzzle to a room");
+			log.info("0. Back to main menu");
+			log.info("Select an option: ");
 
 			while (!scanner.hasNextInt()) {
-				System.out.print("Please enter a valid number: ");
+				log.warn("Invalid input detected");
+				log.info("Please enter a valid number: ");
 				scanner.next();
 			}
 
@@ -43,13 +49,20 @@ public class RoomMenu {
 					roomService.removeRoomById();
 					break;
 				case 3:
-					roomService.addClueToRoom();
+					roomContentService.addClueToRoom();
+					break;
+				case 4:
+					roomContentService.addDecorationItemToRoom();
+					break;
+				case 5:
+					roomContentService.addPuzzleToRoom();
 					break;
 				case 0:
-					System.out.println("Returning to main menu...");
+					log.info("Returning to main menu...");
 					break;
 				default:
-					System.out.println("Invalid option.");
+					log.warn("Invalid option selected: {}", option);
+					log.info("Invalid option.");
 			}
 		} while (option != 0);
 	}

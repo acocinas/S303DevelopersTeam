@@ -33,21 +33,25 @@ public class Room {
 
     public void addPuzzle(Puzzle puzzle) {
         puzzles.add(puzzle);
-        eventManager.notifyObservers("🧠 Puzzle añadido a la sala: " + name);
+        eventManager.notifyObservers("🧠 Puzzle added to the room: " + name);
     }
 
     public void addClue(Clue clue) {
         clues.add(clue);
-        eventManager.notifyObservers("🔍 Pista añadida a la sala: " + name);
+        eventManager.notifyObservers("🔍 Clue added to the room: " + name);
     }
 
     public void addDecorationItem(DecorationItem item) {
         decorationItems.add(item);
-        eventManager.notifyObservers("🎨 Decoración añadida a la sala: " + name);
+        eventManager.notifyObservers("🎨 Decoration added to the room: " + name);
     }
 
     public void addObserver(Observer observer) {
         eventManager.addObserver(observer);
+    }
+
+    public void notifyObservers(String message) {
+        eventManager.notifyObservers(message);
     }
 
     public void removeObserver(Observer observer) {
