@@ -1,11 +1,15 @@
 package com.controller;
 
+import com.dao.exception.DAOException;
 import com.menu.InventoryMenu;
+import com.menu.PlayerMenu;
 import com.menu.RoomMenu;
+import com.service.EscapeRoomService;
 import com.service.InventoryService;
+import com.service.PlayerContentService;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Scanner;
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class EscapeRoomVirtual {
@@ -13,6 +17,8 @@ public class EscapeRoomVirtual {
 	private final Scanner scanner;
 	private final RoomMenu roomMenu;
 	private final InventoryMenu inventoryMenu;
+	private final EscapeRoomService escapeRoomService;
+	private final PlayerMenu playerMenu;
 
 	public EscapeRoomVirtual() {
 		this.inventoryRepository = new InventoryService();
@@ -20,6 +26,11 @@ public class EscapeRoomVirtual {
 
 		this.roomMenu = new RoomMenu(inventoryRepository, scanner);
 		this.inventoryMenu = new InventoryMenu(new com.service.InventoryContentService(inventoryRepository, scanner), scanner);
+		this.escapeRoomService = new EscapeRoomService();
+		this.playerMenu = new PlayerMenu(
+				new PlayerContentService(escapeRoomService, scanner),
+				scanner
+		);
 	}
 
 	public void start() {
@@ -27,7 +38,7 @@ public class EscapeRoomVirtual {
 		do {
 			log.info("Displaying main menu");
 			log.debug("Showing escape room virtual main menu options");
-			
+
 			log.info("\n--- ESCAPE ROOM VIRTUAL MAIN MENU ---");
 			log.info("1. Create Escape Room");
 			log.info("2. Manage Rooms");
@@ -57,10 +68,12 @@ public class EscapeRoomVirtual {
 				case 3:
 					inventoryMenu.manageInventory();
 					break;
-				// case 4: managePlayers();
-				// break;
-				// case 5: viewRevenue();
-				// break;
+				case 4:
+					playerMenu.managePlayers();
+					break;
+				case 5:
+					viewRevenue();
+					break;
 				// case 6: handleNotifications();
 				// break;
 				case 0:
@@ -83,7 +96,17 @@ public class EscapeRoomVirtual {
 			return;
 		}
 
-		log.info("✅ Escape Room created with name: \"{}\"", name);
+		log.info("Escape Room created with name: \"{}\"", name);
 	}
+
+	private void viewRevenue() {
+		try {
+			double revenue = escapeRoomService.calculateTotalRevenue();
+			log.info("Total revenue generated from ticket sales: €{}", String.format("%.2f", revenue));
+		} catch (DAOException e) {
+			log.error("Failed to calculate revenue: {}", e.getMessage(), e);
+		}
+	}
+
 }
 
