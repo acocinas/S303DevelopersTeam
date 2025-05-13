@@ -1,5 +1,6 @@
 package com.controller;
 
+import com.dao.DAOManager;
 import com.dao.exception.DAOException;
 import com.menu.InventoryMenu;
 import com.menu.PlayerMenu;
@@ -74,8 +75,9 @@ public class EscapeRoomVirtual {
 				case 5:
 					viewRevenue();
 					break;
-				// case 6: handleNotifications();
-				// break;
+				case 6:
+					handleNotifications();
+					break;
 				case 0:
 					log.info("Exiting Escape Room Virtual system...");
 					break;
@@ -105,6 +107,53 @@ public class EscapeRoomVirtual {
 			log.info("Total revenue generated from ticket sales: €{}", String.format("%.2f", revenue));
 		} catch (DAOException e) {
 			log.error("Failed to calculate revenue: {}", e.getMessage(), e);
+		}
+	}
+
+	private void handleNotifications() {
+		try {
+			log.info("Enter the ID of the player who wants to receive notifications:");
+			while (!scanner.hasNextInt()) {
+				log.warn("Invalid input detected");
+				log.info("Please enter a valid numeric ID:");
+				scanner.next();
+			}
+			int playerId = scanner.nextInt();
+			scanner.nextLine();
+
+			log.info("Enter the ID of the room the player wants to subscribe to:");
+			while (!scanner.hasNextInt()) {
+				log.warn("Invalid input detected");
+				log.info("Please enter a valid numeric ID:");
+				scanner.next();
+			}
+			int roomId = scanner.nextInt();
+			scanner.nextLine();
+
+			var playerDAO = DAOManager.getDAOFactory().getPlayerDAO();
+			var roomDAO = DAOManager.getDAOFactory().getRoomDAO();
+
+			var playerOpt = playerDAO.findById(playerId);
+			var roomOpt = roomDAO.findById(roomId);
+
+			if (playerOpt.isEmpty()) {
+				log.warn("Player not found with ID {}", playerId);
+				return;
+			}
+			if (roomOpt.isEmpty()) {
+				log.warn("Room not found with ID {}", roomId);
+				return;
+			}
+
+			var player = playerOpt.get();
+			var room = roomOpt.get();
+
+			room.addObserver(player);
+
+			log.info("Player '{}' subscribed to notifications for room '{}'", player.getName(), room.getName());
+
+		} catch (DAOException e) {
+			log.error("Failed to register player to room: {}", e.getMessage(), e);
 		}
 	}
 

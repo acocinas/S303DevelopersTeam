@@ -1,6 +1,5 @@
 package com.enums;
 
-
 public enum Difficulty {
     EASY("Easy", 60),  
     MEDIUM("Medium", 50), 
