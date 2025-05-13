@@ -48,7 +48,7 @@ class RoomIntegrationTest {
 
         // Notificar que se resolvió un puzzle
         if (solved) {
-            room.notifyObservers("✅ Puzzle solved: " + puzzle.getDescription());
+            room.notifyObservers("Puzzle solved: " + puzzle.getDescription());
         }
 
         // Verificar que el puzzle se marcó como resuelto
