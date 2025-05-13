@@ -14,7 +14,8 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.function.IntConsumer;
 
-import static com.utils.LogMessages.*;
+import static com.util.LogMessages.*;
+
 
 @Slf4j
 public class InventoryContentService {
