@@ -84,6 +84,7 @@ public class RoomContentService {
 
 			Clue clue = factory.createClue(description, theme);
 			room.getClues().add(clue);
+			inventoryService.addClue(clue);
 			return true;
 		});
 	}
