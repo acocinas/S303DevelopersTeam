@@ -1,7 +1,6 @@
 package com.service;
 
 import com.dao.DAOManager;
-import com.dao.DecorationItemDAOImpl;
 import com.dao.exception.DAOException;
 import com.enums.Difficulty;
 import com.enums.Material;
@@ -70,10 +69,24 @@ public class InventoryService {
 		decorationItemDAO.create(item);
 	}
 
-	public void removeRoomFromInventory(Integer roomId) throws DAOException {
+	public boolean removeRoomFromInventory(Integer roomId) {
 		log.info("Removing room from inventory: {}", roomId);
-		roomDAO.deleteById(roomId);
+		try {
+			roomDAO.deleteById(roomId);
+			log.info("Room with ID {} was successfully removed from inventory.", roomId);
+			return true;
+		} catch (DAOException e) {
+			String causeMsg = e.getCause() != null ? e.getCause().getMessage().toLowerCase() : "";
+
+			if (causeMsg.contains("no room found")) {
+				log.warn("No room exists with ID {}. Please try with a valid one.", roomId);
+			} else {
+				log.error("Unexpected error while removing room: {}", e.getMessage(), e);
+			}
+			return false;
+		}
 	}
+
 
 	public void removeClueFromInventory(Integer clueId) throws DAOException {
 		log.info("Removing clue from inventory: {}", clueId);
