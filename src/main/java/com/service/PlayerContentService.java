@@ -19,11 +19,6 @@ public class PlayerContentService {
 		this.scanner = scanner;
 	}
 
-	/**
-	 * Helper method to read and validate integer input from user
-	 * @param entityType Type of entity to prompt for (e.g., "player", "room")
-	 * @return The valid integer input
-	 */
 	private int getValidIntInput(String entityType) {
 		log.info(ENTER_ENTITY_ID, entityType);
 		while (!scanner.hasNextInt()) {
@@ -36,43 +31,51 @@ public class PlayerContentService {
 		return id;
 	}
 
-	/**
-	 * Generic method to handle player activities involving rooms
-	 * @param itemType Type of activity (for logging)
-	 * @param successMessage Log message format for successful operation
-	 * @param processor Predicate that processes the player and room IDs
-	 */
-	private void processPlayerActivity(String itemType, String successMessage, 
-	                                 BiPredicate<Integer, Integer> processor) {
-		try {
+	private void processPlayerActivity(String itemType, String successMessage,
+									   BiPredicate<Integer, Integer> processor) {
+		boolean success = false;
+
+		while (!success) {
 			int playerId = getValidIntInput("player");
 			int roomId = getValidIntInput("room");
 
-			if (processor.test(playerId, roomId)) {
-				log.info(successMessage, playerId, roomId);
+			try {
+				if (processor.test(playerId, roomId)) {
+					log.info(successMessage, playerId, roomId);
+					success = true;
+				}
+			} catch (DAOException e) {
+				String message = e.getMessage().toLowerCase();
+
+				if (message.contains("player not found")) {
+					log.warn("Player ID {} not found. Please enter a valid player ID.", playerId);
+				} else if (message.contains("room not found")) {
+					log.warn(" Room ID {} not found. Please enter a valid room ID.", roomId);
+				} else {
+					log.error(PROCESSING_ERROR, itemType, e.getMessage(), e);
+					break; // solo salimos del bucle en errores graves
+				}
 			}
-		} catch (DAOException e) {
-			log.error(PROCESSING_ERROR, itemType, e.getMessage(), e);
 		}
 	}
 
 	public void sellTicketToPlayer() {
-		processPlayerActivity("ticket", TICKET_SOLD, 
-			(playerId, roomId) -> {
-				Date date = new Date();
-				escapeRoomService.sellTicket(playerId, roomId, date);
-				return true;
-			}
+		processPlayerActivity("ticket", TICKET_SOLD,
+				(playerId, roomId) -> {
+					Date date = new Date();
+					escapeRoomService.sellTicket(playerId, roomId, date);
+					return true;
+				}
 		);
 	}
 
 	public void issueCertificateToPlayer() {
 		processPlayerActivity("certificate", CERTIFICATE_ISSUED,
-			(playerId, roomId) -> {
-				Date completionDate = new Date();
-				escapeRoomService.issueCertificate(playerId, roomId, completionDate);
-				return true;
-			}
+				(playerId, roomId) -> {
+					Date completionDate = new Date();
+					escapeRoomService.issueCertificate(playerId, roomId, completionDate);
+					return true;
+				}
 		);
 	}
 }
