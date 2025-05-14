@@ -74,10 +74,14 @@ public class RoomService {
 
 			int roomId = scanner.nextInt();
 			scanner.nextLine();
+			boolean removed = inventoryService.removeRoomFromInventory(roomId);
 
-			inventoryService.removeRoomFromInventory(roomId);
+			if (removed) {
+				log.info(ROOM_REMOVED, roomId);
+			} else {
+				log.warn("Could not remove room with ID {}. It may not exist.", roomId);
+			}
 
-			log.info(ROOM_REMOVED, roomId);
 		} catch (DAOException e) {
 			log.error("Could not remove room: {}", e.getMessage(), e);
 		}
